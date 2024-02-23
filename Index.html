@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Connexion</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Connexion</h1>
+        <form id="loginForm">
+            <label for="username">Nom d'utilisateur:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="button" onclick="login()">Se connecter</button>
+        </form>
+        <p id="loginMessage"></p>
+
+        <div class="links">
+            <a href="#">Mot de passe oublié ?</a>
+            <span>|</span>
+            <a href="#" onclick="redirectToInscription()">S'inscrire</a>
+        </div>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
