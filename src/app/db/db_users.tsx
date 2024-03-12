@@ -18,7 +18,7 @@ async function getUsers(limit : number = 10) {
     }
 }
 
-async function createUser(email: string, firstName: string, lastName: string, birthDate: string, password: string) {
+async function createUser(username:string, email: string, firstName: string, lastName: string, birthDate: string, password: string) {
     try {
         const query = 'insert into users (email, first_name, last_name, birth_date, password) values ($1, $2, $3, $4, $5)';
 
@@ -29,7 +29,7 @@ async function createUser(email: string, firstName: string, lastName: string, bi
             query,
             values
         );
-        return {success:true,message:"User with "+email+" created successfully !"};
+        return {success:true,message:"User with email "+email+" created successfully !"};
     } catch ( error: any ) {
         console.log( error );
         return {success:false,message:error.detail};
@@ -121,6 +121,21 @@ async function getEmail(id: number) {
             values
         );
         return {success:true,message:result.rows[0].email}
+    } catch ( error: any ) {
+        console.log( error );
+        return {success:false,message:error.detail};
+    }
+}
+
+async function getUsername(id: number) {
+    try {
+        const query = 'select username from users where id = $1';
+        const values = [id];
+        const result = await pool.query(
+            query,
+            values
+        );
+        return {success:true,message:result.rows[0].username}
     } catch ( error: any ) {
         console.log( error );
         return {success:false,message:error.detail};

@@ -16,6 +16,7 @@ export async function GET(request: Request,context: any) {
     }, {status: 200});
   }
 
+// for now i dont add the username as changeable
 export async function UPDATE(request: Request,context: any) {
     const { params } = context;
     const data = await request.json();
