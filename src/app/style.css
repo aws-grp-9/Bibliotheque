@@ -25,6 +25,8 @@ input {
     padding: 8px;
     margin-bottom: 10px;
     box-sizing: border-box;
+    border-width: thin;
+    border-color: black;
 }
 
 button {
@@ -58,7 +60,8 @@ button:hover {
 }
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: hsl(0, 0%, 96%);
+    color:rgba(0, 0, 0, 1);
     margin: 0;
     display: flex;
     align-items: center;
@@ -77,5 +80,9 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+h1 {
+    font-size: xx-large;
+    font-weight: bolder;
+}
 
 
