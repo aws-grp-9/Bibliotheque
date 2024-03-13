@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 import pkg from 'pg';
-
+import dotenv from 'dotenv';
+dotenv.config();
 const nextConfig = {
     reactStrictMode: true,
 };
@@ -10,11 +11,11 @@ const nextConfig = {
 export default (phase, { defaultConfig }) => {
     const { Pool } = pkg;
     const pool = new Pool({
-    user: "postgres",
-    host: "localhost",
-    database: "bib",
-    password: "admin",
-    port: 5432,
+    user: process.env.DB_USERNAME,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
     });
 
 
