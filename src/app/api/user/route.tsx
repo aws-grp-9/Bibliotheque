@@ -6,9 +6,7 @@ export async function GET(request: Request) {
     if (limit === null) {
       limit = '10';
     }
-
     const result = await getUsers(parseInt(limit));
-    
     if (result.success === false) {
       return NextResponse.json({
         message: result.message,
