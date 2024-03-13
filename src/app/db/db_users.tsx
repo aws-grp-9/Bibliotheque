@@ -20,11 +20,11 @@ async function getUsers(limit : number = 10) {
 
 async function createUser(username:string, email: string, firstName: string, lastName: string, birthDate: string, password: string) {
     try {
-        const query = 'insert into users (email, first_name, last_name, birth_date, password) values ($1, $2, $3, $4, $5)';
+        const query = 'insert into users (username, email, first_name, last_name, birth_date, password) values ($1, $2, $3, $4, $5, $6)';
 
         // console.log(email, firstName, lastName, birthDate, password);
         const hashedPassword = await bcrypt.hash(password, 10);
-        const values = [email, firstName, lastName, birthDate, hashedPassword];
+        const values = [username, email, firstName, lastName, birthDate, hashedPassword];
         const result = await pool.query(
             query,
             values
