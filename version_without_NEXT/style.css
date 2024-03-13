@@ -1,81 +1,87 @@
 body {
+    background-color: rgb(246, 245, 245); /* Couleur de fond semi-transparente (noir avec 50% d'opacité) */
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    padding: 0;
 }
 
 .container {
-    background-color: #fff;
+    width: 400px;
+    margin: 50px auto;
     padding: 20px;
-    border-radius: 5px;
+    background-color: #d1d6fb;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: rgb(90, 90, 247);
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 label {
     display: block;
     margin-bottom: 5px;
+    color: #555555;
 }
 
-input {
-    width: 100%;
-    padding: 8px;
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button {
+    width: calc(100% - 22px);
+    padding: 10px;
     margin-bottom: 10px;
+    border: 1px solid #cecfe3;
+    border-radius: 5px;
     box-sizing: border-box;
 }
 
 button {
-    background-color: #4caf77;
-    color: #ffffff;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
+    background-color: #4c59af;
+    color: white;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #458ea0;
 }
 
-/* ... (votre style existant) ... */
-
 .links {
-    margin-top: 10px;
-    text-align: center;
+    margin-top: 20px;
+    color: #72a7f7;
 }
 
 .links a {
-    color: #007BFF;
     text-decoration: none;
-    margin: 0 10px;
+    color: #729cf6;
 }
 
 .links a:hover {
     text-decoration: underline;
 }
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-image: url('C:/Users/GLOBAL INFO LAGA/Desktop/Projet Bibliotheque/téléchargement (1).jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+
+#registrationMessage {
+    color: #0080ff;
+    margin-top: 10px;
 }
 
-.container {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 30px;
 }
-
-
+.logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 30px;
+}
 
