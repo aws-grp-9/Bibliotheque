@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.1.0",
+    "@supabase/supabase-js": "^2.39.8",
     "@vercel/postgres": "^0.7.2",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
