@@ -1,14 +1,23 @@
 require("dotenv").config();
+import { createPool } from '@vercel/postgres';
 
-const Pool = require("pg").Pool;
-const pool = new Pool({
-  user: process.env.DB_USERNAME,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+// local ver : 
+// const Pool = require("pg").Pool;
+// const pool = new Pool({
+//   user: process.env.DB_USERNAME,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   port: process.env.DB_PORT,
+// });
+
+// vercel ver :
+const pool = createPool({
+  connectionString: process.env.POSTGRES_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
-
 
 
 export default pool;
