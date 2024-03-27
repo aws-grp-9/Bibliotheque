@@ -20,7 +20,7 @@ export default function Home(){
                 var home_a = document.createElement('a');
                 home_a.id = 'home_a';
                 home_a.textContent = 'Connectez-vous';
-                home_a.href = '/signin';
+                home_a.href = '/login';
                 home_div.appendChild(home_a);
             }
         }
