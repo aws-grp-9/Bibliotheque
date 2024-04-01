@@ -3,7 +3,7 @@ import pool from './connection';
 
 async function getBooks(limit: number = 10) {
     try {
-        const query = 'select * from books limit $1';
+        const query = 'select * from public."Books" limit $1';
         const values = [limit];
         const result = await pool.query(
             query,
@@ -19,7 +19,7 @@ async function getBooks(limit: number = 10) {
 
 async function getBook(id: number) {
     try {
-        const query = 'select * from books where id = $1';
+        const query = 'select * from public."Books" where id = $1';
         const values = [id];
         const result = await pool.query(
             query,
@@ -32,10 +32,10 @@ async function getBook(id: number) {
     }
 }
 
-async function addBook(title: string, author: string, date: string, description: string) {
+async function addBook(title: string, author: string, date: string, description: string, ISBN: string, genre: string) {
     try {
-        const query = 'insert into books (title, author, date, description) values ($1, $2, $3, $4)';
-        const values = [title, author, date, description];
+        const query = 'insert into public."Books" (title, author_id, date, description,ISBN,genre) values ($1, $2, $3, $4 , $5, $6)';
+        const values = [title, author, date, description, ISBN, genre];
         const result = await pool.query(
             query,
             values
@@ -47,10 +47,10 @@ async function addBook(title: string, author: string, date: string, description:
     }
 }
 
-async function updateBook(id: number, title: string, author: string, date: string, description: string) {
+async function updateBook(id: number, title: string, author: string, date: string, description: string, ISBN: string, genre: string) {
     try {
-        const query = 'update books set title = $1, author = $2, date = $3, description = $4 where id = $5';
-        const values = [title, author, date, description, id];
+        const query = 'update public."Books" set title = $1, author = $2, date = $3, description = $4, ISBN = $5, genre = $6 where id = $7';
+        const values = [title, author, date, description, ISBN, genre, id];
         const result = await pool.query(
             query,
             values
@@ -64,7 +64,7 @@ async function updateBook(id: number, title: string, author: string, date: strin
 
 async function deleteBook(id: number) {
     try {
-        const query = 'delete from books where id = $1';
+        const query = 'delete from public."Books" where id = $1';
         const values = [id];
         const result = await pool.query(
             query,

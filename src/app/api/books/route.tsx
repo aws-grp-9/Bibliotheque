@@ -26,8 +26,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
 
     const data = await request.json();
-    const { title, author, date, description } = data;
-    const result = await addBook(title, author, date, description);
+    const { title, author, date, description , ISBN , genre } = data;
+    const result = await addBook(title, author, date, description, ISBN, genre);
     
     if (result.success === false) {
       return NextResponse.json({
