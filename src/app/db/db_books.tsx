@@ -1,10 +1,17 @@
 import pool from './connection';
 
 
-async function getBooks(limit: number = 10) {
+async function getBooks(limit: number = 10,keywords : string = '') {
     try {
-        const query = 'select * from public."Books" limit $1';
-        const values = [limit];
+        let query = '';
+        let values = [];
+        if (keywords === '') {
+            query = 'select * from public."Books" limit $1';
+            values = [limit];
+        } else {
+            query = 'select * from public."Books" where title like $1 or author like $1 or genre like $1 limit $2';
+            values = ['%'+keywords+'%',limit];
+        }
         const result = await pool.query(
             query,
             values
@@ -32,10 +39,10 @@ async function getBook(id: number) {
     }
 }
 
-async function addBook(title: string, author: string, date: string, description: string, ISBN: string, genre: string) {
+async function addBook(title: string, author: string, date: string, description: string, ISBN: string, genre: string,stored_at: number) {
     try {
-        const query = 'insert into public."Books" (title, author_id, date, description,ISBN,genre) values ($1, $2, $3, $4 , $5, $6)';
-        const values = [title, author, date, description, ISBN, genre];
+        const query = 'insert into public."Books" (title, author_id, date, description,ISBN,genre,store_at_id) values ($1, $2, $3, $4 , $5, $6, $7)';
+        const values = [title, author, date, description, ISBN, genre, stored_at];
         const result = await pool.query(
             query,
             values

@@ -1,6 +1,4 @@
 import pool from './connection';
-import bcrypt from 'bcrypt';
-
 
 // à tester après la connection avec la DB
 async function getUsers(limit : number = 10) { 

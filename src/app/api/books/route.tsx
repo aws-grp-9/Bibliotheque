@@ -6,11 +6,15 @@ export async function GET(request: Request) {
 
     // get header var "numberBooks" from the request
     let limit = request.headers.get('numberBooks');
+    let keywords = request.headers.get('keywords');
     if (limit === null) { // if not specified, default to 10
       limit = '10';
     }
+    if (keywords === null) { // if not specified, default to empty string
+      keywords = '';
+    }
 
-    const result = await getBooks(parseInt(limit));
+    const result = await getBooks(parseInt(limit), keywords);
 
     if (result.success === false) {
       return NextResponse.json({
@@ -26,8 +30,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
 
     const data = await request.json();
-    const { title, author, date, description , ISBN , genre } = data;
-    const result = await addBook(title, author, date, description, ISBN, genre);
+    const { title, author, date, description , ISBN , genre, stored_at } = data;
+    const result = await addBook(title, author, date, description, ISBN, genre,stored_at);
     
     if (result.success === false) {
       return NextResponse.json({
