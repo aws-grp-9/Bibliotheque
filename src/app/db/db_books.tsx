@@ -39,10 +39,10 @@ async function getBook(id: number) {
     }
 }
 
-async function addBook(title: string, author: string, date: string, description: string, ISBN: string, genre: string,stored_at: number) {
+async function addBook(title: string, author: string, date: string, description: string, ISBN: string, genre: string) {
     try {
-        const query = 'insert into public."Books" (title, author_id, date, description,ISBN,genre,store_at_id) values ($1, $2, $3, $4 , $5, $6, $7)';
-        const values = [title, author, date, description, ISBN, genre, stored_at];
+        const query = 'insert into public."Books" (title, author_id, date, description,ISBN,genre) values ($1, $2, $3, $4 , $5, $6)';
+        const values = [title, author, date, description, ISBN, genre];
         const result = await pool.query(
             query,
             values

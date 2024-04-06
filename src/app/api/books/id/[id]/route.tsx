@@ -34,8 +34,8 @@ export async function GET(request: Request,context: any) {
 export async function UPDATE(request: Request,context: any) {
     const { params } = context;
     const data = await request.json();
-    const { title, author, date, description } = data;
-    const result = await updateBook(params.id,title,author,date,description);
+    const { title, author, date, description, ISBN , genre } = data;
+    const result = await updateBook(params.id,title,author,date,description,ISBN,genre);
 
     if (result.success === false) {
       return NextResponse.json({
