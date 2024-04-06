@@ -18,8 +18,8 @@ const navlinks = [
     },
     {
         id:2,
-        title:"Documents",
-        href:"/documents"
+        title:"Livres",
+        href:"/book"
     },
     {
         id:3,
@@ -28,8 +28,13 @@ const navlinks = [
     },
     {
         id:4,
-        title:"A propos",
-        href:"/about"
+        title:"Actualités",
+        href:"/actualites"
+    },
+    {
+        id:5,
+        title:"Sponsorisé",
+        href:"/sponsor"
     }
 ];
 const morelinks = [
@@ -248,14 +253,13 @@ export default function Navbar(){
 
          
                                 <div className="flex items-center gap-3">
-                
                                     <input
-                                    type="text"
-                                    placeholder="Recherche..."
-                                    className="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                />
+                                        type="text"
+                                        placeholder="Recherche..."
+                                        className="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                    />
                                     <button
                                         className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
                                         onClick={handleSearch}

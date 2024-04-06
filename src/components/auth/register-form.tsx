@@ -87,6 +87,19 @@ export const RegisterForm = () => {
                         )}/>
 
 
+
+
+                        <label htmlFor="studyYear">Année d'étude:</label>
+                                <select id="studyYear" name="studyYear" required>
+                                    <option value="1">1ère année</option>
+                                    <option value="2">2ème année</option>
+                                    <option value="3">3ème année</option>
+                                    <option value="4">Master 1</option>
+                                    <option value="5">Master 2</option>
+                                </select>
+
+
+
                     </div>
                     <FormError message={error}/>
                     <FormSuccess message={success}/>
