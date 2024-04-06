@@ -18,5 +18,8 @@ export const RegisterSchema = z.object({
     }),
     password: z.string().min(6,{
         message: "Votre mot de passe doit avoir minimum 6 caractères ! "
+    }),
+    numEtu: z.string().min(8,{
+        message: "Votre numéro étudiant doit avoir minimum 8 caractères ! "
     })
 })

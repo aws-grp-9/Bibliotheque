@@ -20,6 +20,7 @@ export const RegisterForm = () => {
             name:"",
             email:"",
             password:"",
+            numEtu:"",
         }
     });
     const [error, setError] = useState<string | undefined>();
@@ -76,7 +77,7 @@ export const RegisterForm = () => {
                             </FormItem>
                         )}/>
 
-                        <FormField control={form.control} name="email" render={({field})=>(
+                        <FormField control={form.control} name="numEtu" render={({field})=>(
                             <FormItem>
                             <FormLabel>Numéro étudiant : </FormLabel>
                             <FormControl>

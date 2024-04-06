@@ -9,6 +9,10 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {useTheme} from "next-themes";
 import { useState } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import React from 'react';
+import { signOut } from "@/actions/auth";
+import { useRouter } from 'next/navigation';
 
 const navlinks = [
     {
@@ -68,9 +72,28 @@ export default function Navbar(){
     const pathname = usePathname();
     const {theme, setTheme} = useTheme();
     const [searchQuery, setSearchQuery] = useState('');
+    const [ email,setEmail ] = useState('');
+    const router = useRouter();
+
     const handleSearch = () => {
         console.log('Recherche en cours pour :', searchQuery);
     };
+
+    const checksession = async () => {
+        const supabase = createClient()
+        const { data, error } = await supabase.auth.getUser()
+        if (error || !data?.user) {
+            return;
+        }
+        document.getElementById('Disconnected')?.classList.add('hidden');
+        document.getElementById('Connected')?.classList.remove('hidden');
+        setEmail(data.user.email || ''); // Provide a default value for setEmail to make TypeScript happy..
+    }
+
+    React.useEffect(() => {
+        checksession()
+    }, []);
+
     return(
         <>
             <nav className="z-[30] w-full sticky top-0 backdrop-blur-sm bg-white/90 dark:bg-slate-950/90 transition">
@@ -107,13 +130,13 @@ export default function Navbar(){
                             </Button>
                             <div className="hidden md:flex gap-2">
                                 <div
-                                    className={`text-sm flex gap-3 items-center font-medium ${/* user ? "hidden": */"flex"}`}>
+                                    className={`text-sm flex gap-3 items-center font-medium ${/* user ? "hidden": */"flex"}`} id="Disconnected">
                                     <Link href={"/auth/login"} className="text-green-600 hover:text-green-600/90 flex">Se
                                         connecter</Link>
                                     ●
                                     <Link href={"/auth/register"} className="hover:text-opacity-90">S{"'"}inscrire</Link>
                                 </div>
-                                <div className={`flex gap-4 ${/* user ? "flex" : */ "hidden"}`}>
+                                <div className={`flex gap-4 ${/* user ? "flex" : */ "hidden"}`} id="Connected">
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <Button variant="ghost" className="px-2 py-2 rounded-full">
@@ -167,8 +190,8 @@ export default function Navbar(){
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent aria-label="Static Actions"
                                                              className="mr-3 rounded-md w-[200px]">
-                                            <DropdownMenuLabel className="text-xs line-clamp-2">Connecté en tant
-                                                que <br/> {/* user?.email */}</DropdownMenuLabel>
+                                            <DropdownMenuLabel className="text-xs line-clamp-2" id="loggedInAs">Connecté en tant
+                                                que <br/> { email }</DropdownMenuLabel>
                                             <DropdownMenuSeparator/>
                                             <DropdownMenuItem className="rounded-md" asChild>
                                                 <Link href="/dashboard"
@@ -192,7 +215,7 @@ export default function Navbar(){
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem
-                                                className="rounded-md text-red-600 hover:text-red-600 flex gap-2 items-center w-full h-full">
+                                                className="rounded-md text-red-600 hover:text-red-600 flex gap-2 items-center w-full h-full" onClick={() => {signOut().then(() => location.reload())}}>
                                                 <DoorOpen size={20}/>
                                                 Se déconnecter
                                             </DropdownMenuItem>
