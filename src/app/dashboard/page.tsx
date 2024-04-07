@@ -1,9 +1,9 @@
-import { auth, signOut } from '@/auth'
+import { auth, signOut } from '@/actions/auth'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
 export default async function Dashboard() {
-    const user = await auth()
+    const user = await auth();
   return (
     <div>
       {JSON.stringify(user)}

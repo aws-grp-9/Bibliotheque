@@ -1,7 +1,6 @@
 "use server"
 import { LoginSchema, RegisterSchema } from "@/schemas";
 import { z } from "zod";
-import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 import { signIn } from "@/auth";
 import { createClient } from '@/utils/supabase/server';
@@ -59,4 +58,18 @@ export const register = async (data: z.infer<typeof RegisterSchema>) => {
 export const signOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
+}
+
+export const auth = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.getUser();
+    if(error){
+        return{
+            error: "Erreur lors de la récupération de vos informations."
+        }
+    }
+    // Faire une requête à la base de données pour récupérer les infos de l'utilisateur
+    return {
+        email : data?.user.email
+    };
 }
