@@ -5,9 +5,14 @@ import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import Link from 'next/link';
 import './modal.css';
+import BookCatalog from '@/app/book/page';
 
 interface Book {
     id: number;
+    date: string;
+    description: string;
+    ISBN: string;
+    genre: string;
     title: string;
     author: string; // Nouvel attribut pour le nom de l'auteur
     available: boolean;
@@ -19,32 +24,53 @@ interface Book {
   const bookpage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+    const [bookList, setBookList] = useState<Book[]>([]);
+    // Fetch books from an API Address : localhost:3000/api/books
+    const fetchBooks = async (keywords:string='') => {
+      // add infos to headers
+      const headers = new Headers();
+      headers.append('numberBooks', '10');
+      headers.append('keywords', keywords);
+      headers.append('genre', 'Informatique');
+      const request = new Request('http://localhost:3000/api/books', {
+        method: 'GET',
+        headers: headers,
+      });
+      const response = await fetch(request);
+      const data = await response.json();
+      console.log(data);
+
+      // Return the list of books in Book format
+      if (data.result === undefined || data.result.length === 0) {
+        console.log('No books found');
+        setBookList([]);
+        console.log('Booklist:', bookList);
+      }
+      setBookList(data.result);
+    }
+
+
+    // when typing in the search bar, fetch books
 
 
 
-  // Liste des livres (exemple)
-  const bookList: Book[] = [
-    { id: 1, title: 'Livre 1', author: 'Auteur 1', available: true, imageUrl: '/images/telechargement.jpg' },
-    { id: 2, title: 'Livre 2', author: 'Auteur 2', available: false, imageUrl: '/images/telechargement.jpg' },
-    { id: 3, title: 'Livre 3', author: 'Auteur 3', available: true, imageUrl: '/images/telechargement.jpg' },
-    // Ajoutez d'autres livres si nécessaire
-  ];
-
-  // Filtrer la liste de livres en fonction du terme de recherche
-  const filteredBooks = bookList.filter(book =>
-    book.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-
-    const reserveBook = (book: Book) => {
-        setSelectedBook(book);
-      };
+  const reserveBook = (book: Book) => {
+      setSelectedBook(book);
+  };
     
-      const closeModal = () => {
-        setSelectedBook(null);
+  const closeModal = () => {
+    setSelectedBook(null);
   };
 
- 
+  React.useEffect(() => {
+    fetchBooks(searchTerm);
+  }, []);
+
+  React.useEffect(() => {
+    fetchBooks(searchTerm);
+  }, [searchTerm]);
+
+  
   return (
     
     <div style={{ backgroundColor: '#f3f4f6', minHeight: '100vh' }}>
@@ -68,7 +94,7 @@ interface Book {
           }}
         />
         <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}> {/* Ajustement du style pour aligner les livres à gauche */}
-          {filteredBooks.map(book => (
+          {bookList.map(book => (
             <li key={book.id} style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
               <img src={book.imageUrl} alt={book.title} style={{ width: '150px', marginRight: '20px' }} />
               <button onClick={() => reserveBook(book)} style={{ padding: '10px 20px', fontSize: '16px' }}>
