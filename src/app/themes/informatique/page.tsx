@@ -14,12 +14,21 @@ interface Book {
     imageUrl: string;// Nouvel attribut pour l'URL de l'image du livre
 
   }
+<<<<<<< HEAD:src/app/book/bookpage/page.tsx
  
+=======
+
+>>>>>>> 526aae80956576b9f4fc9208ca243fc51c307052:src/app/themes/informatique/page.tsx
 
   const bookpage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+<<<<<<< HEAD:src/app/book/bookpage/page.tsx
     const [borrowedBooks, setBorrowedBooks] = useState<Book[]>([]);
+=======
+
+
+>>>>>>> 526aae80956576b9f4fc9208ca243fc51c307052:src/app/themes/informatique/page.tsx
 
   // Liste des livres (exemple)
   const bookList: Book[] = [
@@ -45,7 +54,6 @@ interface Book {
       imageUrl: '/images/livre.jpg'
     },
     // Ajoutez d'autres livres si nécessaire
-    
   ];
 
   // Filtrer la liste de livres en fonction du terme de recherche
