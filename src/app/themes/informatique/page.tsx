@@ -9,28 +9,18 @@ import './modal.css';
 interface Book {
     id: number;
     title: string;
-
     author: string; // Nouvel attribut pour le nom de l'auteur
     available: boolean;
     imageUrl: string;// Nouvel attribut pour l'URL de l'image du livre
 
   }
-  const themes = [
-    { name: 'Informatique', slug: 'nformatique' },
-    { name: 'Mathématiques', slug: 'athématiques' },
-    { name: 'Physique', slug: 'hysique' },
-    { name: 'chimie', slug: 'chimie' },
-    { name: 'art', slug: 'art' },
-    { name: 'langue', slug: 'langue' },
-    { name: 'histoire', slug: 'histoire' },
-    { name: 'geographie', slug: 'geographie' },
-    { name: 'SVT', slug: 'SVT' },
-  ];
+
 
   const bookpage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedBook, setSelectedBook] = useState<Book | null>(null);
-  
+
+
 
   // Liste des livres (exemple)
   const bookList: Book[] = [
@@ -38,7 +28,6 @@ interface Book {
     { id: 2, title: 'Livre 2', author: 'Auteur 2', available: false, imageUrl: '/images/telechargement.jpg' },
     { id: 3, title: 'Livre 3', author: 'Auteur 3', available: true, imageUrl: '/images/telechargement.jpg' },
     // Ajoutez d'autres livres si nécessaire
-    
   ];
 
   // Filtrer la liste de livres en fonction du terme de recherche
