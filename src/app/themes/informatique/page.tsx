@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
@@ -39,8 +40,51 @@ const books = [
   },
   // Ajoutez d'autres livres si nécessaire
 ];
+interface Book {
+  id: number;
+  date: string;
+  description: string;
+  ISBN: string;
+  genre: string;
+  title: string;
+  author: string; // Nouvel attribut pour le nom de l'auteur
+  available: boolean;
+  image: string;
+}
 
 const BookPage = () => {
+  const [bookList, setBookList] = React.useState<Book[]>([]);
+  const [searchTerms, setSearchTerms] = React.useState('');
+  const fetchBooks = async (keywords:string='') => {
+    // add infos to headers
+    const headers = new Headers();
+    headers.append('numberBooks', '10');
+    headers.append('keywords', keywords);
+    headers.append('genre', 'Informatique');
+    const request = new Request('http://localhost:3000/api/books', {
+      method: 'GET',
+      headers: headers,
+    });
+    const response = await fetch(request);
+    const data = await response.json();
+    console.log(data);
+    if (data.result === undefined || data.result.length === 0) {
+      console.log('No books found');
+      setBookList([]);
+      console.log('Booklist:', bookList);
+    }
+    console.log("Data:", data.result[1].image);
+    setBookList(data.result);
+  }
+
+  React.useEffect(() => {
+    fetchBooks(searchTerms);
+  }, []);
+
+  React.useEffect(() => {
+    fetchBooks(searchTerms);
+  }, [searchTerms]);
+
   return (
     <>
       <Navbar />
@@ -57,8 +101,8 @@ const BookPage = () => {
                 />
                 </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {books.map((book) => (
-            <Link key={book.id} href={`/livres/${book.slug}`}>
+          {bookList.map((book) => (
+            <Link key={book.id} href={`/book/${book.id}`}>
               <div className="group relative w-full mx-auto my-4 overflow-hidden border border-gray-200 rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105">
                 <img
                   src={book.image}
