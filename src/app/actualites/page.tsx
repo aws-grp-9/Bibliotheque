@@ -25,8 +25,8 @@ const NewsSection = () => {
   
       {
           id: 3,
-          title: 'Semaine de l/innovation à l/université',
-          description: 'Participez à la semaine de l/innovation où de nombreux ateliers et conférences auront lieu. Du 10 au 15 avril.',
+          title: 'Semaine de l\'innovation à l\'université',
+          description: 'Participez à la semaine de l\'innovation où de nombreux ateliers et conférences auront lieu. Du 10 au 15 avril.',
           date: '2024-04-01',
             image: 'exposition.png',
             link: '/exposition'
@@ -41,7 +41,7 @@ const NewsSection = () => {
         },
         {
           id:5,
-          title: 'Conférence sur l/intelligence artificielle',
+          title: 'Conférence sur l\'intelligence artificielle',
           description: 'Ne manquez pas la conférence sur les avancées récentes en intelligence artificielle. Le 20 avril à 16h.',
           date: '2024-04-10',
           image: 'exposition.png',
@@ -69,6 +69,7 @@ const NewsSection = () => {
                   </a>
                 </div>
               </Link>
+              
             ))}
           </div>
         </section>
