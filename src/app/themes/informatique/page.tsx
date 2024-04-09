@@ -118,7 +118,6 @@ interface Book {
 
         ))}
       </div>
-    
       {selectedBook && (
         <div className="modal">
           <div className="modal-content">
