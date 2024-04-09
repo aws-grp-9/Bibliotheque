@@ -24,15 +24,15 @@ Le projet que nous avons choisi de réaliser est un site de bibliothèque. Le si
 
  -Nous avons étendu le développement du front-end de notre application en ajoutant de nouvelles pages, notamment une pour les livres et une autre page guidée par matière.
 
- -Fonctionnalité de réservation de livres : Nous avons introduit la possibilité pour les utilisateurs de réserver des livres
- directement depuis l'application.
-
  -Création de comptes utilisateurs.
+
+ -Connecter la base de données aux pages où se trouvent les livres.
 
 
  ###  Fonctionnalité que l'on souhaite implémenter
 
- - Consulter la liste des ouvrages. 
+ - Réservation de livres.
+ - Consulter la liste des ouvrages.
  - rechercher un ouvrage précis.
  - Reserver des ouvrage pour les consulter sur place.
  - Consulter la disponibilité d'un ouvrage.
@@ -44,7 +44,7 @@ Le projet que nous avons choisi de réaliser est un site de bibliothèque. Le si
 # Probléme recontrer :
 
 -Bugs et erreurs 
--Intégration avec le back-end
+-Intégration le front-end avec le back-end
 
  ### Bibliographie:
 

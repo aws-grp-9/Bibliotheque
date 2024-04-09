@@ -21,21 +21,21 @@ const books = [
     id: 2,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/fondement.jpeg',
+    image: '/Le Beau Livre de Physique.jpeg',
     slug: 'livre-2'
   },
   {
     id: 3,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/windows.jpg',
+    image: '/Physique.jpg',
     slug: 'livre-3'
   },
   {
     id: 4,
     title: 'Learn',
     author: 'Auteur 4',
-    image: '/bd.jpeg',
+    image: '/La physique quantique.jpeg',
     slug: 'livre-4'
   },
   // Ajoutez d'autres livres si nécessaire
@@ -57,24 +57,24 @@ const BookPage = () => {
   const [searchTerms, setSearchTerms] = React.useState('');
   const fetchBooks = async (keywords:string='') => {
     // add infos to headers
-    const headers = new Headers();
-    headers.append('numberBooks', '10');
-    headers.append('keywords', keywords);
-    headers.append('genre', 'Informatique');
-    const request = new Request('http://localhost:3000/api/books', {
-      method: 'GET',
-      headers: headers,
-    });
-    const response = await fetch(request);
-    const data = await response.json();
-    console.log(data);
-    if (data.result === undefined || data.result.length === 0) {
-      console.log('No books found');
-      setBookList([]);
-      console.log('Booklist:', bookList);
-    }
-    console.log("Data:", data.result[1].image);
-    setBookList(data.result);
+    //const headers = new Headers();
+    //headers.append('numberBooks', '10');
+    //headers.append('keywords', keywords);
+    //headers.append('genre', 'physique');
+    //const request = new Request('http://localhost:3000/api/books', {
+      //method: 'GET',
+      //headers: headers,
+    //});
+    //const response = await fetch(request);
+    //const data = await response.json();
+    //console.log(data);
+    //if (data.result === undefined || data.result.length === 0) {
+      //console.log('No books found');
+      //setBookList([]);
+      //console.log('Booklist:', bookList);
+    //}
+    //console.log("Data:", data.result[1].image);
+    //setBookList(data.result);
   }
 
   React.useEffect(() => {
@@ -90,6 +90,7 @@ const BookPage = () => {
       <Navbar />
       <section className="max-w-6xl mx-auto my-10 px-4">
         <h2 className="text-4xl font-bold mb-4">Livres disponibles</h2>
+
             <div className="flex items-center gap-3">
                 <input
                     type="text"
@@ -108,7 +109,6 @@ const BookPage = () => {
                   alt={book.title}
                   className="w-full h-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-70"
                 />
-
 
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
                   <p className="text-white text-lg font-bold text-center">{book.title}</p>
