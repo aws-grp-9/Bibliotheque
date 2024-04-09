@@ -50,7 +50,7 @@ const BookPage = () => {
             <div className="flex items-center gap-3">
                 <input
                     type="text"
-                    placeholder="Recherche un livre..."
+                    placeholder="Rechercher un livre..."
                     className="px-20 py-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                     //value={searchQuery}
                     //onChange={(e) => setSearchQuery(e.target.value)}

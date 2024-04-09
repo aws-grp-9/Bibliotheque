@@ -121,6 +121,7 @@ export default function Navbar(){
                                 ))}
                             </div>
                         </section>
+                        
 
                         <section className="flex items-center gap-3">
                             <Button size={"icon"} className="relative rounded-full" variant="ghost" onClick={() => {
