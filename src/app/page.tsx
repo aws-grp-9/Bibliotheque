@@ -5,7 +5,6 @@ import Footer from '@/components/ui/footer';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 
-
 const NewsSection = () => {
     // Supposons que vous récupériez les actualités à partir d'une source de données
     const newsData = [
@@ -38,7 +37,7 @@ const NewsSection = () => {
                   <div key={news.id} className="w-full">
                       <Link href={news.link} passHref>
                           <div>
-                                <div className="bg-green-500 rounded-md p-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                                <div className="bg-green-300 rounded-md p-4 shadow-md transition duration-200 ease-in-out transform hover:scale-105">
                                     <h3 className="text-lg font-bold mb-2 text-gray-900">{news.title}</h3>
                                     <p className="text-xs text-gray-600 mt-2">Date : {news.date}</p>
                                 </div>
@@ -49,7 +48,7 @@ const NewsSection = () => {
           </div>
           <div className="mt-4">
               <Link href="/actualites">
-              <Button variant="secondary" size={"lg"} className="active:scale-95 transition focus:outline focus:outline-gray-300 font-medium w-full sm:w-fit bg-green-500 hover:bg-green-600 text-white">Toutes vos actualités ICI</Button>
+              <Button variant="secondary" size={"lg"} className="active:scale-95 transition focus:outline focus:outline-gray-300 font-medium w-full sm:w-fit bg-green-400 hover:bg-green-600 text-white">Toutes vos actualités ICI</Button>
               </Link>
           </div>
       </section>
@@ -63,11 +62,11 @@ export default function Home() {
             <Navbar />
             <main className="max-w-[1340px] mx-auto px-2">
                 <section className='hero mx-auto max-w-3xl px-4 pt-12 sm:pt-24 lg:pt-28' style={{
-                    //backgroundImage: 'url(/bg__hero.png)',
+                    backgroundImage: 'url(/biblio.png)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    backgroundColor: '#1cda9b', // Couleur de fond vert
+                    //backgroundColor: '#1cda9b', // Couleur de fond vert
                     color: '#FFFFFF', // Couleur du texte blanc
                 }}>
                     <section className="mt-10 text-center">

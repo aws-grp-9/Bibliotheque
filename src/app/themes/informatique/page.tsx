@@ -1,95 +1,89 @@
-"use client"
-
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import Link from 'next/link';
-import './modal.css';
-
-interface Book {
-    id: number;
-    title: string;
-    author: string; // Nouvel attribut pour le nom de l'auteur
-    available: boolean;
-    imageUrl: string;// Nouvel attribut pour l'URL de l'image du livre
-
-  }
+import { Button } from "@/components/ui/button";
+import handleSearch from "@/components/ui/header";
+import searchQuery from "@/components/ui/header";
 
 
-  const bookpage: React.FC = () => {
-    const [searchTerm, setSearchTerm] = useState<string>('');
-    const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+// Liste des livres avec leurs détails
+const books = [
+  {
+    id: 1,
+    title: 'Learn',
+    author: 'Auteur 1',
+    image: '/MPI.png',
+    slug: 'livre-1'
+  },
+  {
+    id: 2,
+    title: 'Learn',
+    author: 'Auteur 2',
+    image: '/fondement.jpeg',
+    slug: 'livre-2'
+  },
+  {
+    id: 3,
+    title: 'Learn',
+    author: 'Auteur 2',
+    image: '/windows.jpg',
+    slug: 'livre-3'
+  },
+  {
+    id: 4,
+    title: 'Learn',
+    author: 'Auteur 4',
+    image: '/bd.jpeg',
+    slug: 'livre-4'
+  },
+  // Ajoutez d'autres livres si nécessaire
+];
 
-
-
-  // Liste des livres (exemple)
-  const bookList: Book[] = [
-    { id: 1, title: 'Livre 1', author: 'Auteur 1', available: true, imageUrl: '/images/telechargement.jpg' },
-    { id: 2, title: 'Livre 2', author: 'Auteur 2', available: false, imageUrl: '/images/telechargement.jpg' },
-    { id: 3, title: 'Livre 3', author: 'Auteur 3', available: true, imageUrl: '/images/telechargement.jpg' },
-    // Ajoutez d'autres livres si nécessaire
-  ];
-
-  // Filtrer la liste de livres en fonction du terme de recherche
-  const filteredBooks = bookList.filter(book =>
-    book.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-
-    const reserveBook = (book: Book) => {
-        setSelectedBook(book);
-      };
-    
-      const closeModal = () => {
-        setSelectedBook(null);
-  };
-
- 
+const BookPage = () => {
   return (
-    
-    <div style={{ backgroundColor: '#f3f4f6', minHeight: '100vh' }}>
+    <>
       <Navbar />
-      <main style={{ textAlign: 'center', padding: '20px' }}>
-        <h1 style={{ color: '#333' }}>Ressources en informatique</h1>
-        <input
-          type="text"
-          placeholder="Rechercher un livre..."
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-          style={{
-            padding: '10px',
-            fontSize: '16px',
-            width: '80%',
-            maxWidth: '500px',
-            border: '2px solid #ccc',
-            borderRadius: '20px',
-            marginBottom: '20px',
-            outline: 'none',
-          }}
-        />
-        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}> {/* Ajustement du style pour aligner les livres à gauche */}
-          {filteredBooks.map(book => (
-            <li key={book.id} style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-              <img src={book.imageUrl} alt={book.title} style={{ width: '150px', marginRight: '20px' }} />
-              <button onClick={() => reserveBook(book)} style={{ padding: '10px 20px', fontSize: '16px' }}>
-                {book.title} - {book.author}
-              </button>
-            </li>
-          ))}
-        </ul>
-        {selectedBook && (
-          <div className="modal">
-            <div className="modal-content">
-              <span className="close" onClick={closeModal}>&times;</span>
-              <h2>{selectedBook.title}</h2>
-              <p>Disponible: {selectedBook.available ? 'Oui' : 'Non'}</p>
-            </div>
-          </div>
-        )}
-      </main>
-      <Footer />
-    </div>
-  );
-}
+      <section className="max-w-6xl mx-auto my-10 px-4">
+        <h2 className="text-4xl font-bold mb-4">Livres disponibles</h2>
+                        
+            <div className="flex items-center gap-3">
+                <input
+                    type="text"
+                    placeholder="Recherche un livre..."
+                    className="px-20 py-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                    //value={searchQuery}
+                    //onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {books.map((book) => (
+            <Link key={book.id} href={`/livres/${book.slug}`}>
+              <div className="group relative w-full mx-auto my-4 overflow-hidden border border-gray-200 rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105">
+                <img
+                  src={book.image}
+                  alt={book.title}
+                  className="w-full h-full object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-70"
+                />
 
-export default bookpage ;
+    
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+                  <p className="text-white text-lg font-bold text-center">{book.title}</p>
+                </div>
+              </div>
+            </Link>
+            
+          ))}
+        </div>
+      </section>
+      <div className="mt-4">
+              <Link href="/articles">
+              <Button variant="secondary" size={"lg"} className="active:scale-95 transition focus:outline focus:outline-gray-300 font-medium w-full sm:w-fit bg-green-200 hover:bg-green-600 text-white">Plus de ressources ICI</Button>
+              </Link>
+          </div>
+      <Footer />
+   </>
+  );
+};
+
+export default BookPage;
