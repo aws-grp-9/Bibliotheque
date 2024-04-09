@@ -14,28 +14,28 @@ const books = [
     id: 1,
     title: 'Learn',
     author: 'Auteur 1',
-    image: '/MPI.png',
+    image: '/Barbazo Mathématique.jpg',
     slug: 'livre-1'
   },
   {
     id: 2,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/Le Beau Livre de Physique.jpg',
+    image: '/beau livre de math.jpg',
     slug: 'livre-2'
   },
   {
     id: 3,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/Physique.jpg',
+    image: '/Les mathématiques.png',
     slug: 'livre-3'
   },
   {
     id: 4,
     title: 'Learn',
     author: 'Auteur 4',
-    image: '/La physique quantique.jpg',
+    image: '/La physique quantique.jpeg',
     slug: 'livre-4'
   },
   // Ajoutez d'autres livres si nécessaire
