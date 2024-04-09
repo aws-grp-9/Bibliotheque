@@ -103,7 +103,7 @@ const BookPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {bookList.map((book) => (
             <Link key={book.id} href={`/book/${book.id}`}>
-              <div className="group relative w-full mx-auto my-4 overflow-hidden border border-gray-200 rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105">
+              <div className="group relative w-full mx-auto my-4 overflow-hidden border border-gray-200 rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105 w-64 h-80">
                 <img
                   src={book.image}
                   alt={book.title}
