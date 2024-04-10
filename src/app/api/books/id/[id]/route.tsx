@@ -1,5 +1,5 @@
 import { NextResponse , NextRequest} from "next/server";
-import { getBook , deleteBook , updateBook } from "@/app/db/db_books";
+import { getBook , deleteBook , updateBook } from "@/lib/db/db_books";
 
 // Route on localhost:3000/api/books/id/[id]
 
@@ -34,8 +34,8 @@ export async function GET(request: Request,context: any) {
 export async function UPDATE(request: Request,context: any) {
     const { params } = context;
     const data = await request.json();
-    const { title, author, date, description, ISBN , genre } = data;
-    const result = await updateBook(params.id,title,author,date,description,ISBN,genre);
+    const { title, author, date, description, ISBN , genre, image } = data;
+    const result = await updateBook(params.id,title,author,date,description,ISBN,genre,image);
 
     if (result.success === false) {
       return NextResponse.json({

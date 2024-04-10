@@ -73,7 +73,6 @@ const BookPage = () => {
       setBookList([]);
       console.log('Booklist:', bookList);
     }
-    console.log("Data:", data.result[1].image);
     setBookList(data.result);
   }
 
@@ -93,6 +92,8 @@ const BookPage = () => {
                         
             <div className="flex items-center gap-3">
                 <input
+                    value={searchTerms}
+                    onChange={(e) => setSearchTerms(e.target.value)}
                     type="text"
                     placeholder="Rechercher un livre..."
                     className="px-20 py-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
