@@ -35,7 +35,7 @@ const books = [
     id: 4,
     title: 'Learn',
     author: 'Auteur 4',
-    image: '/La physique quantique.jpeg',
+    image: '/Math pour le plaisir.jpg',
     slug: 'livre-4'
   },
   // Ajoutez d'autres livres si nécessaire

@@ -14,28 +14,28 @@ const books = [
     id: 1,
     title: 'Learn',
     author: 'Auteur 1',
-    image: '/physique mécanique.jpg',
+    image: '/Civilisation Française.jpg',
     slug: 'livre-1'
   },
   {
     id: 2,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/Le Beau Livre de Physique.jpg',
+    image: '/Littérature jeunesse.jpg',
     slug: 'livre-2'
   },
   {
     id: 3,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/Physique.jpg',
+    image: '/Littérature française.jpg',
     slug: 'livre-3'
   },
   {
     id: 4,
     title: 'Learn',
     author: 'Auteur 4',
-    image: '/La physique quantique.jpg',
+    image: '/comprendre la littérature française.jpg',
     slug: 'livre-4'
   },
   // Ajoutez d'autres livres si nécessaire
