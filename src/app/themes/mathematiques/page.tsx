@@ -57,24 +57,24 @@ const BookPage = () => {
   const [searchTerms, setSearchTerms] = React.useState('');
   const fetchBooks = async (keywords:string='') => {
     // add infos to headers
-    //const headers = new Headers();
-    //headers.append('numberBooks', '10');
-    //headers.append('keywords', keywords);
-    //headers.append('genre', 'physique');
-    //const request = new Request('http://localhost:3000/api/books', {
-      //method: 'GET',
-      //headers: headers,
-    //});
-    //const response = await fetch(request);
-    //const data = await response.json();
-    //console.log(data);
-    //if (data.result === undefined || data.result.length === 0) {
-      //console.log('No books found');
-      //setBookList([]);
-      //console.log('Booklist:', bookList);
-    //}
-    //console.log("Data:", data.result[1].image);
-    //setBookList(data.result);
+    const headers = new Headers();
+    headers.append('numberBooks', '10');
+    headers.append('keywords', keywords);
+    headers.append('genre', 'physique');
+     const request = new Request('http://localhost:3000/api/books', {
+      method: 'GET',
+      headers: headers,
+    });
+    const response = await fetch(request);
+    const data = await response.json();
+    console.log(data);
+    if (data.result === undefined || data.result.length === 0) {
+      console.log('No books found');
+      setBookList([]);
+      console.log('Booklist:', bookList);
+    }
+    console.log("Data:", data.result[1].image);
+    setBookList(data.result);
   }
 
   React.useEffect(() => {

@@ -14,28 +14,28 @@ const books = [
     id: 1,
     title: 'Learn',
     author: 'Auteur 1',
-    image: '/physique mécanique.jpg',
+    image: '/Langue et science, langage et pensée.png',
     slug: 'livre-1'
   },
   {
     id: 2,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/Le Beau Livre de Physique.jpg',
+    image: '/dictionnaire.jpg',
     slug: 'livre-2'
   },
   {
     id: 3,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/Physique.jpg',
+    image: '/Le livre d une langue.jpg',
     slug: 'livre-3'
   },
   {
     id: 4,
     title: 'Learn',
     author: 'Auteur 4',
-    image: '/La physique quantique.jpg',
+    image: '/Polonais.jpg',
     slug: 'livre-4'
   },
   // Ajoutez d'autres livres si nécessaire
@@ -56,11 +56,11 @@ const BookPage = () => {
   const [bookList, setBookList] = React.useState<Book[]>([]);
   const [searchTerms, setSearchTerms] = React.useState('');
   const fetchBooks = async (keywords:string='') => {
-    // add infos to headers
+   // add infos to headers
     const headers = new Headers();
     headers.append('numberBooks', '10');
     headers.append('keywords', keywords);
-    headers.append('genre', 'physique');
+    headers.append('genre', 'langue');
     const request = new Request('http://localhost:3000/api/books', {
       method: 'GET',
       headers: headers,

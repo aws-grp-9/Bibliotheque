@@ -14,28 +14,28 @@ const books = [
     id: 1,
     title: 'Learn',
     author: 'Auteur 1',
-    image: '/Langue et science, langage et pensée.png',
+    image: '/catographie.jpg',
     slug: 'livre-1'
   },
   {
     id: 2,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/dictionnaire.jpg',
+    image: '/geo.jpg',
     slug: 'livre-2'
   },
   {
     id: 3,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/Le livre d une langue.jpg',
+    image: '/geographie.jpg',
     slug: 'livre-3'
   },
   {
     id: 4,
     title: 'Learn',
     author: 'Auteur 4',
-    image: '/Polonais.jpg',
+    image: '/dictionnaire de geo.jpg',
     slug: 'livre-4'
   },
   // Ajoutez d'autres livres si nécessaire
@@ -57,24 +57,24 @@ const BookPage = () => {
   const [searchTerms, setSearchTerms] = React.useState('');
   const fetchBooks = async (keywords:string='') => {
     // add infos to headers
-    //const headers = new Headers();
-    //headers.append('numberBooks', '10');
-    //headers.append('keywords', keywords);
-    //headers.append('genre', 'physique');
-    //const request = new Request('http://localhost:3000/api/books', {
-      //method: 'GET',
-      //headers: headers,
-    //});
-    //const response = await fetch(request);
-    //const data = await response.json();
-    //console.log(data);
-    //if (data.result === undefined || data.result.length === 0) {
-      //console.log('No books found');
-      //setBookList([]);
-      //console.log('Booklist:', bookList);
-    //}
-    //console.log("Data:", data.result[1].image);
-    //setBookList(data.result);
+    const headers = new Headers();
+    headers.append('numberBooks', '10');
+    headers.append('keywords', keywords);
+    headers.append('genre', 'langue');
+    const request = new Request('http://localhost:3000/api/books', {
+      method: 'GET',
+      headers: headers,
+    });
+    const response = await fetch(request);
+    const data = await response.json();
+    console.log(data);
+    if (data.result === undefined || data.result.length === 0) {
+    console.log('No books found');
+      setBookList([]);
+      console.log('Booklist:', bookList);
+    }
+    console.log("Data:", data.result[1].image);
+    setBookList(data.result);
   }
 
   React.useEffect(() => {

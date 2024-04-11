@@ -55,6 +55,7 @@ interface Book {
 const BookPage = () => {
   const [bookList, setBookList] = React.useState<Book[]>([]);
   const [searchTerms, setSearchTerms] = React.useState('');
+
   const fetchBooks = async (keywords:string='') => {
     // add infos to headers
     const headers = new Headers();
@@ -85,12 +86,14 @@ const BookPage = () => {
     fetchBooks(searchTerms);
   }, [searchTerms]);
 
+  
+
   return (
     <>
       <Navbar />
       <section className="max-w-6xl mx-auto my-10 px-4">
         <h2 className="text-4xl font-bold mb-4">Livres disponibles</h2>
-                        
+
             <div className="flex items-center gap-3">
                 <input
                     type="text"

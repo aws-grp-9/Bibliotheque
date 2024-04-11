@@ -14,28 +14,28 @@ const books = [
     id: 1,
     title: 'Learn',
     author: 'Auteur 1',
-    image: '/physique mécanique.jpg',
+    image: '/l histoire de france.jpg',
     slug: 'livre-1'
   },
   {
     id: 2,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/Le Beau Livre de Physique.jpg',
+    image: '/les hauts lieux de l histoire.jpg',
     slug: 'livre-2'
   },
   {
     id: 3,
     title: 'Learn',
     author: 'Auteur 2',
-    image: '/Physique.jpg',
+    image: '/livre histoire.jpg',
     slug: 'livre-3'
   },
   {
     id: 4,
     title: 'Learn',
     author: 'Auteur 4',
-    image: '/La physique quantique.jpg',
+    image: '/livre histoire.jpg',
     slug: 'livre-4'
   },
   // Ajoutez d'autres livres si nécessaire
@@ -60,7 +60,7 @@ const BookPage = () => {
     const headers = new Headers();
     headers.append('numberBooks', '10');
     headers.append('keywords', keywords);
-    headers.append('genre', 'physique');
+    headers.append('genre', 'histoire');
     const request = new Request('http://localhost:3000/api/books', {
       method: 'GET',
       headers: headers,
@@ -69,7 +69,7 @@ const BookPage = () => {
     const data = await response.json();
     console.log(data);
     if (data.result === undefined || data.result.length === 0) {
-      console.log('No books found');
+    console.log('No books found');
       setBookList([]);
       console.log('Booklist:', bookList);
     }
