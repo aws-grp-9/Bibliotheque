@@ -5,6 +5,7 @@ import Footer from '@/components/ui/footer';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 
+
 const NewsSection = () => {
     const newsData = [
         {
@@ -28,12 +29,27 @@ const NewsSection = () => {
             link: '/semaine-innovation',
             image: '/conf3.jpeg' // Chemin vers l'image de la semaine de l'innovation
         },
+        {
+            id: 3,
+            title: 'Semaine de la culture à l/université',
+            date: '2024-04-01',
+            link: '/semaine-innovation',
+            image: '/conf3.jpeg' // Chemin vers l'image de la semaine de l'innovation
+        },
+        {
+            id: 3,
+            title: 'Semaine de la recherche à l/université',
+            date: '2024-04-01',
+            link: '/semaine-innovation',
+            image: '/conf3.jpeg' // Chemin vers l'image de la semaine de l'innovation
+        },
         // Ajoutez d'autres actualités ici
     ];
 
     return (
-        <section className="max-w-5xl mx-auto my-5 px-2">
-            <h2 className="text-4xl font-bold mb-9 text-center text-gray-2000">Actualités</h2>
+        <section className="max-w-7xl mx-auto my-5 px-2" >
+            <h2 className="text-6xl font-bold mb-9 text-left underline text-gray-2000">Actualités</h2>
+
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2"> {/* Utilisation de différentes colonnes pour les différentes tailles d'écrans */}
                 {newsData.map((news) => (
                     <div key={news.id}>
@@ -73,15 +89,18 @@ export default function Home() {
                 }}>
 
                     <section className="mt-10 text-center">
-                        <h1 className="text-2xl font-extrabold tracking-tighter sm:leading-none lg:text-2xl bg-gradient-to-r from-red-500 via-black-700 to-neutral-200 dark:bg-clip-text inline-block text-transparent bg-clip-text pr-1">
-                        "Découvrez une source inépuisable de connaissances et d'inspiration depuis chez vous : plongez dans notre bibliothèque universitaire en ligne, votre passerelle virtuelle vers un monde de ressources académiques de premier plan."
+                    <h1 className="text-13xl font-extrabold tracking-tighter sm:leading-none lg:text-4xl bg-gradient-to-r from-red-500 via-green-2000 to-neutral-2000 dark:bg-clip-text inline-block  bg-clip-text pr-3">
+                        ""WELCOME TO THE HOUSE OF KNOWLEDGE""
                         </h1>
-                       <div className="mt-10 flex flex-col gap-3 sm:flex-row md:gap-6 sm:justify-center">
+                        <h1 className="text-2xl font-extrabold tracking-tighter sm:leading-none lg:text-2xl bg-gradient-to-r from-red-500 via-black-700 to-neutral-200 dark:bg-clip-text inline-block  bg-clip-text pr-3">
+                        <i>"Découvrez une source inépuisable de connaissances et d'inspiration depuis chez vous : plongez dans notre bibliothèque universitaire en ligne, votre passerelle virtuelle vers un monde de ressources académiques de premier plan."</i>
+                        </h1>
+                       <div className="mt-15 flex flex-col gap-5 sm:flex-row md:gap-8 sm:justify-center">
                             <Link href={/* user ? "/dashboard":  */"/auth/login"}>
                                 <Button variant="success" size={"lg"} className="active:scale-95 transition focus:outline focus:outline-orange-300 font-medium w-full sm:w-fit text-white">{/* user ? "Aller au tableau de bord": */ "Rejoindre la communauté"}</Button>
                             </Link>
                             <Link href="/book">
-                                <Button variant="secondary" size={"lg"} className="active:scale-95 transition focus:outline focus:outline-gray-300 font-medium w-full sm:w-fit ">Visiter la bibliothèque</Button>
+                                <Button variant="secondary" size={"lg"} className="active:scale-200 transition focus:outline focus:outline-gray-600 font-medium w-full sm:w-fit ">Visiter la bibliothèque</Button>
                             </Link>
                         </div>
                     </section>

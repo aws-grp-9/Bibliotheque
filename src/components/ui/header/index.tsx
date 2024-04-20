@@ -73,6 +73,41 @@ const morelinks = [
         href:"/dashboard/settings"
     }
 ];
+
+function Chat() {
+    const [message, setMessage] = useState<string>('');
+    const [messages, setMessages] = useState<string[]>([]);
+  
+    const sendMessage = () => {
+      if (message.trim() !== '') {
+        setMessages([...messages, message]);
+        setMessage('');
+      }
+    };
+
+return (
+    <div>
+      <h2>Discussion instantanée</h2>
+      <div style={{ height: '300px', overflowY: 'scroll', border: '1px solid #ccc', marginBottom: '10px' }}>
+        {messages.map((msg, index) => (
+          <div key={index} style={{ padding: '5px' }}>
+            {msg}
+          </div>
+        ))}
+      </div>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        style={{ marginRight: '10px' }}
+      />
+      <button onClick={sendMessage}>Envoyer</button>
+    </div>
+  );
+}
+
+//export default Chat;
+
 export default function Navbar(){
     const pathname = usePathname();
     const {theme, setTheme} = useTheme();
@@ -98,6 +133,7 @@ export default function Navbar(){
     React.useEffect(() => {
         checksession()
     }, []);
+
 
     return(
         <>
