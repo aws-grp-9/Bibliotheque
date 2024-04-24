@@ -8,6 +8,8 @@ export async function GET(request: Request) {
     let limit = request.headers.get('numberBooks');
     let keywords = request.headers.get('keywords');
     let genre = request.headers.get('genre');
+    let excluded_ids_string = request.headers.get('excluded_ids');
+    const excluded_ids = excluded_ids_string === null ? [] : JSON.parse(excluded_ids_string);
     if (limit === null) { // if not specified, default to 10
       limit = '10';
     }
@@ -17,7 +19,7 @@ export async function GET(request: Request) {
     if (genre === null) { // if not specified, default to empty string
       genre = '';
     }
-    const result = await getBooks(genre,keywords,parseInt(limit));
+    const result = await getBooks(genre,keywords,parseInt(limit),excluded_ids);
 
     if (result.success === false) {
       return NextResponse.json({

@@ -16,42 +16,42 @@ const themes = [
     image: '/physics.jpg'
   },
   {
-    name: 'informatique',
+    name: 'Informatique',
     slug: 'informatique',
     image: '/informatique.jpg'
   },
   {
-    name: 'litterature',
+    name: 'Littérature',
     slug: 'litterature',
     image: '/litterature.jpg'
   },
   {
-    name: 'chimie',
+    name: 'Chimie',
     slug: 'chimie',
     image: '/chimie.jpg'
   },
   {
-    name: 'art',
+    name: 'Art',
     slug: 'art',
     image: '/art.jpg'
   },
   {
-    name: 'langue',
+    name: 'Langues',
     slug: 'langues',
     image: '/langue.jpg'
   },
   {
-    name: 'histoire',
+    name: 'Histoire',
     slug: 'histoire',
     image: '/histoire.jpg'
   },
   {
-    name: 'geographie',
+    name: 'Géographie',
     slug: 'geographie',
     image: '/geographie.jpg'
   },
   {
-    name: 'SVT',
+    name: 'Biologie',
     slug: 'Biologie',
     image: '/SVT.png'
   }

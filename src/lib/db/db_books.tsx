@@ -2,25 +2,22 @@ import pool from './connection';
 
 
 
-async function getBooks(genre : string,keywords : string = '',limit: number = 10) {
+async function getBooks(genre : string,keywords : string = '',limit: number = 10,excluded_ids: number[] = []) {
     try {
         let query = '';
         let values = [];
         if (keywords === '') {
-            console.log('No keywords');
-            query = 'select * from public."Books" where genre=$1 limit $2';
-            values = [genre,limit];
+            query = 'select * from public."Books" where genre=$1 and id != ALL($2) limit $3';
+            values = [genre, excluded_ids, limit];
         } else {
-            console.log('Keywords');
-            query = 'select * from public."Books" where genre=$1 and title ilike $2 limit $3';
-            values = [genre,'%'+keywords+'%',limit];
+            query = 'select * from public."Books" where genre=$1 and id != ALL($2) and title ilike $3 limit $4';
+            values = [genre,excluded_ids,'%'+keywords+'%',limit];
         }
         const result = await pool.query(
             query,
             values
         );
         
-        console.log(result.rows);
         return {success:true,message:result.rows}
     } catch ( error: any ) {
         console.log( error );
@@ -46,9 +43,8 @@ async function getBook(id: number) {
 
 async function addBook(title: string, author: string, date: string, description: string, ISBN: string, genre: string,image:string) {
     try {
-        const query = 'insert into public."Books" (title, author_id, date, description,ISBN,genre,image) values ($1, $2, $3, $4 , $5, $6, $7)';
-        const image_64 = Buffer.from(image, 'base64');
-        const values = [title, author, date, description, ISBN, genre, image_64];
+        const query = 'insert into public."Books" (title, author, date, description,ISBN,genre,image) values ($1, $2, $3, $4 , $5, $6, $7)';
+        const values = [title, author, date, description, ISBN, genre, image];
         const result = await pool.query(
             query,
             values
