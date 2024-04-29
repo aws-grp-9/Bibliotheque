@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
+import { AvailabilitiesModal } from '@/components/ui/availabilities-loans';
+import { boolean } from 'zod';
+import { useParams } from 'next/navigation';
 
 // Définir une interface pour les données du livre
 interface Book {
@@ -18,21 +21,22 @@ interface Book {
   image: string;
 }
 
+
+
 const LivrePage = () => {
   // Supposons que nous avons un livre fictif
   const [livre, setLivre] = useState<Book>();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const bookId = useParams().id;
 
   // Fonction pour gérer la réservation du livre et enregistrer la date
   const handleReservation = () => {
     const dateReservation = new Date().toLocaleDateString(); // Obtenir la date actuelle
-    alert(`Vous avez réservé le livre le ${dateReservation} !`);
-    // Ici, vous pouvez ajouter la logique de réservation du livre
-    // Par exemple, faire une requête à un backend pour enregistrer la réservation avec la date
+    // open a modal with all the details
+
   };
 
   const fetchBook = async () => {
-    // get book id from the URL
-    const bookId = window.location.pathname.split('/').pop();
     console.log(bookId);
     // fetch the book data from the API
     const request = new Request('http://localhost:3000/api/books/id/' + bookId,{
@@ -42,9 +46,8 @@ const LivrePage = () => {
     const data = await response.json();
     if (data.result) {
       setLivre(data.result);
-      if (livre?.summary !== ""){
+      if (livre?.summary !== "" && livre?.summary !== undefined){
         const div = document.getElementById('info_div');
-        // add child 
         const p = document.createElement('p');
         p.className = "text-gray-700 mb-4";
         p.innerHTML = `<span class="font-bold">Résumé</span> : ${livre?.summary}`;
@@ -60,6 +63,8 @@ const LivrePage = () => {
   }, []);
 
 
+
+
   return (
     <div className="bg-blanc-100 min-h-screen">
       <Navbar />
@@ -71,9 +76,10 @@ const LivrePage = () => {
         {/* Autres informations sur le livre */}
 
         {/* Bouton pour réserver le livre */}
-        <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4 transition-transform duration-300 hover:scale-110" onClick={handleReservation}>
+        <button className="bg-blue-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4 transition-transform duration-300 hover:scale-110" onClick={() => setShowModal(!showModal)}>
           Réserver ce livre
         </button>
+        {showModal && <AvailabilitiesModal setShowModal={setShowModal} bookId={bookId.toString()} />}
       </div>
       <Footer />
     </div>
