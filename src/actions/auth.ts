@@ -45,11 +45,29 @@ export const register = async (data: z.infer<typeof RegisterSchema>) => {
     const supabase = createClient();
     const { error } = await supabase.auth.signUp(data);
     // Ici rajouter l'envoi des infos autres que email/password à la base de données.
+    // fetch vers /api/user avec les infos
+    const body = {
+        creation_date : new Date(),
+        email : email,
+        name : name,
+    }
+
+    console.log(error);
     if(error){
         return {
             error: "Erreur avec la création du compte. Vérifiez vos informations."
         }
     }
+    const request = new Request('http://localhost:3000/api/user', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const response = await fetch(request);
+    const request_data = await response.json();
+    console.log(request_data.success);
     return{
         success:"Votre compte a été créé avec succès, nous vous avons envoyé un email de confirmation."
     }
