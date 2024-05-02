@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import { AvailabilitiesModal } from '@/components/ui/availabilities-loans';
+import { ReservationModal } from '@/components/ui/ReservationModal'
 import { boolean } from 'zod';
 import { useParams } from 'next/navigation';
 
@@ -27,14 +28,18 @@ const LivrePage = () => {
   // Supposons que nous avons un livre fictif
   const [livre, setLivre] = useState<Book>();
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showReservationModal, setShowReservationModal] = useState(false);
   const bookId = useParams().id;
 
-  // Fonction pour gérer la réservation du livre et enregistrer la date
-  const handleReservation = () => {
-    const dateReservation = new Date().toLocaleDateString(); // Obtenir la date actuelle
-    // open a modal with all the details
 
+  const openReservationModal = () => {
+    setShowModal(false);
+    setShowReservationModal(true);
   };
+  const cancelReservationModal = (showfirstmodal:boolean) => {
+    setShowReservationModal(false);
+    setShowModal(showfirstmodal);
+  }
 
   const fetchBook = async () => {
     console.log(bookId);
@@ -97,10 +102,10 @@ const LivrePage = () => {
           {/* Affichage des avis sur le livre */}
           <h2 className="text-2xl font-bold mb-4">Avis</h2>
           <p className="text-gray-700 mb-4">Aucun avis pour le moment</p>
-
         </div> 
       </div> 
-      {showModal && <AvailabilitiesModal setShowModal={setShowModal} bookId={bookId.toString()} />}
+      {showModal && <AvailabilitiesModal setShowModal={setShowModal} bookId={bookId.toString()} openReservationModal={openReservationModal} />}
+      {showReservationModal && <ReservationModal  cancelReservationModal={cancelReservationModal} />}
       </div>
       <Footer />
     </div>
