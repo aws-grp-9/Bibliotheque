@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { getLibraryBooks , addBookToLibrary  } from '@/app/db/db_library';
+import { getLibraryBooks , addBookToLibrary  } from '@/lib/db/db_library';
 
 export async function GET(request: Request,context : any) {
     

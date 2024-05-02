@@ -58,9 +58,10 @@ const BookPage = () => {
   const fetchBooks = async (keywords:string='') => {
     // add infos to headers
     const headers = new Headers();
-    headers.append('numberBooks', '10');
+    const fetchMoreButton = document.getElementById('fetchMoreButton');
+    headers.append('numberBooks', '12');
     headers.append('keywords', keywords);
-    headers.append('genre', 'langue');
+    headers.append('genre', 'geographie');
     const request = new Request('http://localhost:3000/api/books', {
       method: 'GET',
       headers: headers,
@@ -69,12 +70,49 @@ const BookPage = () => {
     const data = await response.json();
     console.log(data);
     if (data.result === undefined || data.result.length === 0) {
-    console.log('No books found');
+      console.log('No books found');
       setBookList([]);
       console.log('Booklist:', bookList);
+      // hide the button
+      if (!fetchMoreButton!.classList.contains('hidden')) {
+        fetchMoreButton!.classList.add('hidden');
+      }
+    } else {
+      fetchMoreButton!.classList.remove('hidden');
+      setBookList(data.result);
     }
-    console.log("Data:", data.result[1].image);
-    setBookList(data.result);
+  }
+
+  const fetchMore = async (keywords:string='') => {
+    // fetch more books
+    // add infos to headers
+    const headers = new Headers();
+    const fetchMoreButton = document.getElementById('fetchMoreButton');
+    const excluded_ids = bookList.map(book => book.id);
+    console.log('Excluded ids:', excluded_ids);
+    headers.append('excluded_ids', JSON.stringify(excluded_ids));
+    headers.append('numberBooks', '12');
+    headers.append('keywords', keywords);
+    headers.append('genre', 'geographie');
+    const request = new Request('http://localhost:3000/api/books', {
+      method: 'GET',
+      headers: headers,
+    });
+    const response = await fetch(request);
+    const data = await response.json();
+    console.log(data);
+    if (data.result === undefined || data.result.length === 0) {
+      console.log('No books found');
+      console.log('Booklist:', bookList);
+      // hide the button
+      if (!fetchMoreButton!.classList.contains('hidden')) {
+        fetchMoreButton!.classList.add('hidden');
+      }
+    } else {
+      fetchMoreButton!.classList.remove('hidden');
+      // add new books to the list
+      setBookList([...bookList, ...data.result]);
+    }
   }
 
   React.useEffect(() => {
@@ -93,17 +131,17 @@ const BookPage = () => {
 
             <div className="flex items-center gap-3">
                 <input
+                    value = {searchTerms}
+                    onChange = {(e) => setSearchTerms(e.target.value)}
                     type="text"
                     placeholder="Rechercher un livre..."
                     className="px-20 py-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                    //value={searchQuery}
-                    //onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {bookList.map((book) => (
             <Link key={book.id} href={`/book/${book.id}`}>
-              <div className="group relative w-full mx-auto my-4 overflow-hidden border border-gray-200 rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105">
+              <div className="group relative w-full mx-auto my-4 overflow-hidden border border-gray-200 rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105 w-64 h-80">
                 <img
                   src={book.image}
                   alt={book.title}
@@ -117,6 +155,9 @@ const BookPage = () => {
             </Link>
 
           ))}
+        </div>
+        <div className="grid justify-center hidden" id='fetchMoreButton'>
+          <Button onClick={() => fetchMore(searchTerms)} variant="secondary" size={"lg"} className="active:scale-95 transition focus:outline focus:outline-gray-300 font-medium w-full sm:w-fit bg-green-200 hover:bg-green-600 text-white align-middle">Voir plus</Button>
         </div>
       </section>
       <div className="mt-4">
