@@ -36,7 +36,6 @@ const LivrePage = () => {
   const openReservationModal = () => {
     setShowModal(false);
     setShowReservationModal(true);
-    setChoosenLibrary("");
   };
   const cancelReservationModal = (showfirstmodal:boolean) => {
     setShowReservationModal(false);
@@ -108,7 +107,7 @@ const LivrePage = () => {
         </div> 
       </div> 
       {showModal && <AvailabilitiesModal setShowModal={setShowModal} bookId={bookId.toString()} openReservationModal={openReservationModal} setChoosenLibrary={setChoosenLibrary} />}
-      {showReservationModal && <ReservationModal  cancelReservationModal={cancelReservationModal}  choosenLibrary={choosenLibrary}/>}
+      {showReservationModal && <ReservationModal  cancelReservationModal={cancelReservationModal}  choosenLibrary={choosenLibrary} bookId={bookId.toString()}/>}
       </div>
       <Footer />
     </div>

@@ -7,7 +7,6 @@ export async function GET(request: Request,context: any) {
     return NextResponse.json({
       message: "Okay we're gonna send you if the book with id "+params.id+" is available !",
     }, {status: 200});
-    
 }
 
 export async function POST(request: Request,context: any) {
