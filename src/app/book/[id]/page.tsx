@@ -29,16 +29,19 @@ const LivrePage = () => {
   const [livre, setLivre] = useState<Book>();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showReservationModal, setShowReservationModal] = useState(false);
+  const [choosenLibrary,setChoosenLibrary] = useState("");
   const bookId = useParams().id;
 
 
   const openReservationModal = () => {
     setShowModal(false);
     setShowReservationModal(true);
+    setChoosenLibrary("");
   };
   const cancelReservationModal = (showfirstmodal:boolean) => {
     setShowReservationModal(false);
     setShowModal(showfirstmodal);
+    setChoosenLibrary("");
   }
 
   const fetchBook = async () => {
@@ -104,8 +107,8 @@ const LivrePage = () => {
           <p className="text-gray-700 mb-4">Aucun avis pour le moment</p>
         </div> 
       </div> 
-      {showModal && <AvailabilitiesModal setShowModal={setShowModal} bookId={bookId.toString()} openReservationModal={openReservationModal} />}
-      {showReservationModal && <ReservationModal  cancelReservationModal={cancelReservationModal} />}
+      {showModal && <AvailabilitiesModal setShowModal={setShowModal} bookId={bookId.toString()} openReservationModal={openReservationModal} setChoosenLibrary={setChoosenLibrary} />}
+      {showReservationModal && <ReservationModal  cancelReservationModal={cancelReservationModal}  choosenLibrary={choosenLibrary}/>}
       </div>
       <Footer />
     </div>

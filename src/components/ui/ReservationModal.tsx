@@ -3,9 +3,10 @@ import React from 'react';
 
 type ReservationModalProps = {
   cancelReservationModal : (arg0: boolean) => void;
+  choosenLibrary : any;
 };
 
-export function ReservationModal({ cancelReservationModal} : ReservationModalProps){
+export function ReservationModal({ cancelReservationModal , choosenLibrary } : ReservationModalProps){
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => cancelReservationModal(true)}>
       {/* Contenu du modal de réservation */}
