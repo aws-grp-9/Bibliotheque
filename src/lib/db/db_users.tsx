@@ -16,12 +16,12 @@ async function getUsers(limit : number = 10) {
     }
 }
 
-async function createUser(username:string, email: string, firstName: string, lastName: string, birthDate: string) {
+async function createUser(creation_date:string, email: string, name:string) {
     try {
-        const query = 'insert into public."User" (username, email, first_name, last_name, birth_date,banned) values ($1, $2, $3, $4, $5,false)';
+        const query = 'insert into public."User" (creation_date, email, name) values ($1, $2, $3)';
 
         // console.log(email, firstName, lastName, birthDate);
-        const values = [username, email, firstName, lastName, birthDate];
+        const values = [creation_date,email,name]
         const result = await pool.query(
             query,
             values
