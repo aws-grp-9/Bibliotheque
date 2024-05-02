@@ -130,13 +130,14 @@ const BookPage = () => {
   return (
     <>
       <Navbar />
-                      <section className="max-w-4xl mx-auto my-10 px-4">
-                        <h1 className="text-3xl font-extrabold tracking-tighter sm:leading-none lg:text-4xl bg-gradient-to-r from-red-500 via-green-2000 to-neutral-2000 dark:bg-clip-text inline-block  bg-clip-text pr-3">
-                        Bienvenue sur le guide Informatique                                                        
+                      <section className="max-w-4xl mx-auto my-10 px-4 ">
+                      <h1 className=" mb-10 text-3xl font-extrabold tracking-tighter sm:leading-none lg:text-4xl bg-gradient-to-r from-red-500 via-green-2000 to-neutral-2000 dark:bg-clip-text inline-block bg-clip-text pr-3">
+                          Bienvenue sur le guide Informatique
                         </h1>
-                        <h2 className="text-xl font-extrabold tracking-tighter sm:leading-none lg:text-xl bg-gradient-to-r from-red-500 via-black-700 to-neutral-200 dark:bg-clip-text inline-block  bg-clip-text pr-3">
-                        <i>Ce guide vous accompagne dans vos recherches en Informatique. Vous y trouverez les principales ressources pour commencer et approfondir vos recherches.</i>
-                        </h2>
+                        <p className="mb-9">
+                          Ce guide vous accompagne dans vos recherches en Informatique. Vous y trouverez les principales ressources pour commencer et approfondir vos recherches.
+                        </p>
+
 
             <div className="flex items-center gap-3">
                 <input

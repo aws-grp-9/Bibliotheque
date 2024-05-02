@@ -20,8 +20,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
     const data = await request.json();
-    const { username, email, firstName, lastName, birthDate, password } = data;
-    const result = await createUser(username, email, firstName, lastName, birthDate);
+    const { creation_date, email, name } = data;
+    const result = await createUser(creation_date, email, name);
     if (result.success === false) {
       return NextResponse.json({
         message:result.message,

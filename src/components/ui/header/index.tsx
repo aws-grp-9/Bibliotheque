@@ -35,11 +35,6 @@ const navlinks = [
         title:"Actualités",
         href:"/actualites"
     },
-    {
-        id:5,
-        title:"Sponsorisé",
-        href:"/sponsor"
-    }
 ];
 const morelinks = [
     {
@@ -70,41 +65,9 @@ const morelinks = [
     {
         id:6,
         title:"Paramètres",
-        href:"/dashboard/settings"
-    }
+        href:"/dashboard/setting"
+    },
 ];
-
-function Chat() {
-    const [message, setMessage] = useState<string>('');
-    const [messages, setMessages] = useState<string[]>([]);
-  
-    const sendMessage = () => {
-      if (message.trim() !== '') {
-        setMessages([...messages, message]);
-        setMessage('');
-      }
-    };
-
-return (
-    <div>
-      <h2>Discussion instantanée</h2>
-      <div style={{ height: '300px', overflowY: 'scroll', border: '1px solid #ccc', marginBottom: '10px' }}>
-        {messages.map((msg, index) => (
-          <div key={index} style={{ padding: '5px' }}>
-            {msg}
-          </div>
-        ))}
-      </div>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        style={{ marginRight: '10px' }}
-      />
-      <button onClick={sendMessage}>Envoyer</button>
-    </div>
-  );
-}
 
 //export default Chat;
 
@@ -209,27 +172,23 @@ export default function Navbar(){
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem asChild className="rounded-md">
-                                                <Link href="/dashboard/newforum"
+                                                <Link href="/dashboard/loan"
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
-                                                    <MessageCircle size={20}/>
+                                                    <DoorOpen size={20}/>
                                                     Faire un pret
                                                 </Link>
                                             </DropdownMenuItem>
+                                            <DropdownMenuItem asChild className="rounded-md">
+                                                <Link href="/dashboard"
+                                                      className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
+                                                    <User size={20}/>
+                                                    Profil
+                                                </Link>
+                                            </DropdownMenuItem>
+
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                     <DropdownMenu>
-                                        <DropdownMenuTrigger className="rounded-full">
-                                            <Avatar className="hover:bg-opacity-80 flex items-center justify-center">
-                                                {/* {loading ? <Loader size={20} className="animate-spin"/> :
-                                                user && user?.photoURL === "" || user?.photoURL === undefined || user?.photoURL === null
-                                                    ? (
-                                                        <AvatarFallback className="font-bold">{user?.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
-                                                    ) : (
-                                                        <AvatarImage src={user?.photoURL}/>
-                                                    )
-                                            } */}
-                                            </Avatar>
-                                        </DropdownMenuTrigger>
                                         <DropdownMenuContent aria-label="Static Actions"
                                                              className="mr-3 rounded-md w-[200px]">
                                             <DropdownMenuLabel className="text-xs line-clamp-2" id="loggedInAs">Connecté en tant
@@ -240,13 +199,6 @@ export default function Navbar(){
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
                                                     <LayoutDashboard size={20}/>
                                                     Tableau de bord
-                                                </Link>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem className="rounded-md" asChild>
-                                                <Link href="/dashboard/profile"
-                                                      className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
-                                                    <User size={20}/>
-                                                    Profil
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem className="rounded-md" asChild>

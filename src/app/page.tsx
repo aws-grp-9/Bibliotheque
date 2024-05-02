@@ -4,6 +4,7 @@ import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
+import carrousel from 'react';
 
 
 const NewsSection = () => {
@@ -54,13 +55,16 @@ const NewsSection = () => {
                 {newsData.map((news) => (
                     <div key={news.id}>
                         <Link href={news.link} passHref>
+                        <div className="carrousel-deco">
                             <div>
                                 <img src={news.image} alt={news.title} className="w-full h-auto rounded-md mb-2 shadow-md hover:shadow-lg transition duration-200 ease-in-out transform hover:scale-105" />
                                 <div className="p-4  shadow-md transition duration-50 ease-in-out transform hover:scale-80">
                                     <h3 className="text-lg font-bold mb-2 text-gray-900">{news.title}</h3>
                                     <p className="text-xs text-gray-600 mt-2 mb-4 border-b border-gray-300 pb-2">{news.date}</p>
+                                    <button className="owl-next" aria-label="Suivant"></button>
                                 </div>
                             </div>
+                        </div>
                         </Link>
                     </div>
                 ))}

@@ -15,26 +15,11 @@ import pool from './connection';
 // Physical Library table functions
 async function getLibraries() {
     try {
-        const query = 'select distinct name from public."Physical Library"';
+        const query = 'select * from public."Physical Library"';
         const result = await pool.query(
             query
         );
         return {success:true,message:result.rows}
-    } catch ( error: any ) {
-        console.log( error );
-        return {success:false,message:error.detail};
-    }
-}
-
-async function getLibraryId(name: string) {
-    try {
-        const query = 'select id from public."Physical Library" where name = $1';
-        const values = [name];
-        const result = await pool.query(
-            query,
-            values
-        );
-        return {success:true,message:result.rows[0]}
     } catch ( error: any ) {
         console.log( error );
         return {success:false,message:error.detail};
@@ -136,6 +121,7 @@ async function deleteBookFromLibrary(id_book: string, id_library: string) {
 async function checkBookQuantity(id_book: string, id_library: string) {
     try {
         const query = 'select quantity from public."LibraryStock" where id_book = $1 and id_library = $2';
+
         const values = [id_book, id_library];
         const result = await pool.query(
             query,
@@ -150,4 +136,4 @@ async function checkBookQuantity(id_book: string, id_library: string) {
 
 // La mise à jour des quantités sur emprunt se fait par trigger sur la table Loans (voir Supabase)
 
-export { getLibraries, getLibraryBooks, addBookToLibrary, deleteBookFromLibrary, checkBookQuantity , getLibraryId, getLibraryInfos , addLibrary , deleteLibrary };
+export { getLibraries, getLibraryBooks, addBookToLibrary, deleteBookFromLibrary, checkBookQuantity, getLibraryInfos , addLibrary , deleteLibrary };
