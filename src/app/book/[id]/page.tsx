@@ -72,6 +72,7 @@ const LivrePage = () => {
     
         {/* Affichage des informations du livre */}
         <h1 className="text-3xl font-bold mb-4 text-center">{livre?.title}</h1>
+        <img src={livre?.image} alt="Image du livre" className="mb-4 w-40" />
         <p className="text-gray-700 mb-2"><span className="font-bold">Auteur</span> : {livre?.author}</p>
         {/* Autres informations sur le livre */}
 
