@@ -11,13 +11,13 @@ export const { auth, signIn, signOut } = NextAuth({
     providers: [
         Credentials({
             credentials: {
-                async authorize(credentials: { email: string; password: string } | undefined) {
+                async authorize(credentials: { email: string; password: string;   userType: string; } | undefined) {
                     if (!credentials) return null;
-                    const { email, password } = credentials;
+                    const { email, password, userType } = credentials;
                     const parsedCredentials = z.object({
                         email: z.string().email(),
                         password: z.string().min(6)
-                    }).safeParse({ email, password });
+                    }).safeParse({ email, password, userType });
                     if (parsedCredentials.success) {
                         const user = await getUserByEmail(email);
                         if (!user || !user.password) return null;

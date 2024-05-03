@@ -1,4 +1,3 @@
-// ContactPage component
 import React from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
