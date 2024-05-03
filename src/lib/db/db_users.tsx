@@ -16,6 +16,21 @@ async function getUsers(limit : number = 10) {
     }
 }
 
+async function getIdFromEmail(email: string) {
+    try {
+        const query = 'select id from public."User" where email = $1';
+        const values = [email];
+        const result = await pool.query(
+            query,
+            values
+        );
+        return {success:true,message:result.rows[0].id}
+    } catch ( error: any ) {
+        console.log( error );
+        return {success:false,message:error.detail};
+    }
+}
+
 async function createUser(creation_date:string, email: string, name:string) {
     try {
         const query = 'insert into public."User" (creation_date, email, name) values ($1, $2, $3)';
@@ -155,4 +170,4 @@ async function getUsername(id: number) {
 // }
 
 
-export { getUsers, createUser , deleteUser, updateUser, getIdUser , getEmail , getInfosUser, getUsername};
+export { getUsers, createUser , deleteUser, updateUser, getIdUser , getEmail , getInfosUser, getUsername, getIdFromEmail};

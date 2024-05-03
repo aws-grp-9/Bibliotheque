@@ -6,9 +6,11 @@ import React, { useEffect, useState } from 'react';
 type ModalProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   bookId: string;
+  openReservationModal: () => void;
+  setChoosenLibrary : React.Dispatch<React.SetStateAction<any>>;
 };
 
-export function AvailabilitiesModal({ setShowModal, bookId }: ModalProps) {
+export function AvailabilitiesModal({ setShowModal, bookId , openReservationModal , setChoosenLibrary }: ModalProps) {
   const [libraries, setLibraries] = useState<any[]>([]);
 
   const fetchAvailabilities = async () => {
@@ -29,6 +31,11 @@ export function AvailabilitiesModal({ setShowModal, bookId }: ModalProps) {
     setLibraries(libraryData);
   };
 
+  const openReservation = (id:any) => {
+    setChoosenLibrary(id);
+    openReservationModal();
+  }
+
   useEffect(() => {
     fetchAvailabilities();
   }, []); 
@@ -42,13 +49,19 @@ export function AvailabilitiesModal({ setShowModal, bookId }: ModalProps) {
           {libraries.map(library => (
             <p key={library.id} className="text-gray-700 mb-4">
               <span className="font-bold">{library.name}</span>: {library.quantity} exemplaires 
-              <button className="ml-2 py-1 px-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">Réserver</button>
+              <button id='reserve-button'
+                className="ml-2 py-1 px-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                onClick={() => openReservation(library.id)}
+                disabled={library.quantity === "0"}>
+                Réserver
+              </button>
             </p>
           ))}
           </div>
           <button 
             className="mt-4 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-            onClick={() => setShowModal(false)}>
+            onClick={() => setShowModal(false)}
+          >
             Fermer
           </button>
         </div>
