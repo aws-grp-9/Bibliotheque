@@ -62,11 +62,6 @@ const morelinks = [
         title:"Profil",
         href:"/dashboard/profile"
     },
-    {
-        id:6,
-        title:"Paramètres",
-        href:"/dashboard/setting"
-    },
 ];
 
 //export default Chat;
@@ -169,13 +164,6 @@ export default function Navbar(){
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
                                                     <MessageCircle size={20}/>
                                                     Nouvelle discussion
-                                                </Link>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem asChild className="rounded-md">
-                                                <Link href="/dashboard/loan"
-                                                      className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
-                                                    <DoorOpen size={20}/>
-                                                    Faire un pret
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem asChild className="rounded-md">
