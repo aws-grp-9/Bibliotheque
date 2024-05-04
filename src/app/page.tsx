@@ -114,13 +114,13 @@ export default function Home() {
                     <div className="mx-auto max-w-[1340px] px-6 lg:px-8">
                         <div className="mx-auto max-w-2xl lg:mx-0">
                             <h2 className="text-4xl font-extrabold tracking-tighter sm:text-6xl">Travaillons ensemble</h2>
-                            <p className="mt-6 text-lg leading-8 dark:text-neutral-300 font-medium">Créer votre compte pour ainsi contribuer au bien-être et au partage de connaissances au sein d&#039;e L'UVSQ</p>
+                            <p className="mt-6 text-lg leading-8 dark:text-neutral-300 font-medium">Créer votre compte pour ainsi contribuer au bien-être et au partage de connaissances au sein de l'université</p>
                         </div>
                         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
                             <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
                                 <div className="flex flex-col-reverse">
                                     <dt className="text-base leading-7 dark:text-gray-300">Livres enregistrés</dt>
-                                    <dd className="text-2xl font-bold leading-9 tracking-tight dark:text-white">500</dd>
+                                    <dd className="text-2xl font-bold leading-9 tracking-tight dark:text-white">2500+</dd>
                                 </div>
                                 <div className="flex flex-col-reverse">
                                     <dt className="text-base leading-7 dark:text-gray-300">Étudiants inscrits</dt>
