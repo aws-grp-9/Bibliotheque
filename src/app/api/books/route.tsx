@@ -19,20 +19,16 @@ export async function GET(request: Request) {
     if (genre === null) { // if not specified, default to empty string
       genre = '';
     }
-    try{
-      const result = await getBooks(genre,keywords,parseInt(limit),excluded_ids);
+    const result = await getBooks(genre,keywords,parseInt(limit),excluded_ids);
 
-      if (result.success === false) {
-        return NextResponse.json({
-          message: result.message,
-        }, {status: 500});
-      }
+    if (result.success === false) {
       return NextResponse.json({
-        result : result.message
-      }, {status: 200});
-    } catch (e) {
-      console.log(e);
+        message: result.message,
+      }, {status: 500});
     }
+    return NextResponse.json({
+      result : result.message
+    }, {status: 200});
 
   }
 
