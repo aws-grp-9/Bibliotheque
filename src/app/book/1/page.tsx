@@ -61,10 +61,10 @@ const LivrePage = () => {
         </div>
         {/* Section du titre du livre */}
         <div className="w-1/2 space-y-4">
-          <h1 className="text-3xl font-bold mb-6 text-center text-rose-poudree">{livre.title}</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center text-rose">{livre.title}</h1>
         </div>
         {/* Section de l'image du livre */}
-        <div className="w-1/3 relative text-right">
+        <div className="w-1/3 relative text-right pb-8">
           <img 
             src={livre.image} 
             alt={livre.title} 
