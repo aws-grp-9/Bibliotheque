@@ -47,7 +47,7 @@ const LivrePage = () => {
   const fetchBook = async () => {
     console.log(bookId);
     // fetch the book data from the API
-    const request = new Request(`${API_URL}/api/books/id` + bookId,{
+    const request = new Request(`${API_URL}/api/books/id/` + bookId,{
       method: 'GET'
     });
     const response = await fetch(request);
