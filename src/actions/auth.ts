@@ -5,6 +5,7 @@ import { getUserByEmail } from "@/data/user";
 import { signIn } from "@/auth";
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const login = async (data: z.infer<typeof LoginSchema>) => {
     const validateFields = LoginSchema.safeParse(data);
@@ -58,7 +59,7 @@ export const register = async (data: z.infer<typeof RegisterSchema>) => {
             error: "Erreur avec la création du compte. Vérifiez vos informations."
         }
     }
-    const request = new Request('http://localhost:3000/api/user', {
+    const request = new Request(`${API_URL}/api/user`, {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
