@@ -3,6 +3,7 @@ import React from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { start } from 'repl';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 type ReservationModalProps = {
   cancelReservationModal : (arg0: boolean) => void;
   choosenLibrary : any;
@@ -26,7 +27,7 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
     const headers1 = new Headers();
     headers1.append('Content-Type', 'application/json');
     headers1.append('email', data?.user.email || '');
-    const response1 = await fetch(`http://localhost:3000/api/user/id`,{
+    const response1 = await fetch(`${API_URL}/api/user/id`,{
       method: 'GET',
       headers: headers1,
     });
@@ -40,7 +41,7 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
     // check if a loan is already in progress
     const headers2 = new Headers();
     headers2.append('LoanType', 'pending');
-    const response2 = await fetch(`http://localhost:3000/api/loans/`+user_id, {
+    const response2 = await fetch(`${API_URL}/api/loans/`+user_id, {
       method: 'GET',
       headers: headers2,
     });
@@ -55,7 +56,7 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
       }
     }
 
-    const response3 = await fetch(`http://localhost:3000/api/loans/`+user_id, {
+    const response3 = await fetch(`${API_URL}/api/loans/`+user_id, {
       method: 'POST',
       body: JSON.stringify({ id_book : bookId , start_date : start_date  , end_date : end_date , id_library : choosenLibrary}), 
     });

@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 // TypeScript definition for props
 type ModalProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +17,7 @@ export function AvailabilitiesModal({ setShowModal, bookId , openReservationModa
 
   const fetchAvailabilities = async () => {
     // Fetch the book data from the API
-    const response1 = await fetch(`http://localhost:3000/api/library/`);
+    const response1 = await fetch(`${API_URL}/api/library/`);
     const data1 = await response1.json();
     if (!data1.result) {
       alert('Erreur lors de la récupération des bibliothèques');
@@ -23,7 +25,7 @@ export function AvailabilitiesModal({ setShowModal, bookId , openReservationModa
     }
     
     const libraryData = await Promise.all(data1.result.map(async (library: any) => {
-      const response2 = await fetch(`http://localhost:3000/api/library/${library.id}/stocks/${bookId}`);
+      const response2 = await fetch(`${API_URL}/api/library/${library.id}/stocks/${bookId}`);
       const data2 = await response2.json();
       return { ...library, quantity: data2.result?.quantity || 0 };
     }));
