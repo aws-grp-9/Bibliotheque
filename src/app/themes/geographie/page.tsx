@@ -7,39 +7,10 @@ import { Button } from "@/components/ui/button";
 import handleSearch from "@/components/ui/header";
 import searchQuery from "@/components/ui/header";
 
+// get API_URL from .env
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-// Liste des livres avec leurs détails
-const books = [
-  {
-    id: 1,
-    title: 'Learn',
-    author: 'Auteur 1',
-    image: '/catographie.jpg',
-    slug: 'livre-1'
-  },
-  {
-    id: 2,
-    title: 'Learn',
-    author: 'Auteur 2',
-    image: '/geo.jpg',
-    slug: 'livre-2'
-  },
-  {
-    id: 3,
-    title: 'Learn',
-    author: 'Auteur 2',
-    image: '/geographie.jpg',
-    slug: 'livre-3'
-  },
-  {
-    id: 4,
-    title: 'Learn',
-    author: 'Auteur 4',
-    image: '/dictionnaire de geo.jpg',
-    slug: 'livre-4'
-  },
-  // Ajoutez d'autres livres si nécessaire
-];
+
 interface Book {
   id: number;
   date: string;
@@ -57,12 +28,14 @@ const BookPage = () => {
   const [searchTerms, setSearchTerms] = React.useState('');
   const fetchBooks = async (keywords:string='') => {
     // add infos to headers
+    
     const headers = new Headers();
     const fetchMoreButton = document.getElementById('fetchMoreButton');
     headers.append('numberBooks', '12');
     headers.append('keywords', keywords);
     headers.append('genre', 'geographie');
-    const request = new Request('http://localhost:3000/api/books', {
+    console.log(API_URL);
+    const request = new Request(`${API_URL}/api/books`, {
       method: 'GET',
       headers: headers,
     });
@@ -94,7 +67,7 @@ const BookPage = () => {
     headers.append('numberBooks', '12');
     headers.append('keywords', keywords);
     headers.append('genre', 'geographie');
-    const request = new Request('http://localhost:3000/api/books', {
+    const request = new Request(`${API_URL}/api/books`, {
       method: 'GET',
       headers: headers,
     });

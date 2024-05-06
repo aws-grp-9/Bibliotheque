@@ -6,40 +6,9 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import handleSearch from "@/components/ui/header";
 import searchQuery from "@/components/ui/header";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 
-// Liste des livres avec leurs détails
-const books = [
-  {
-    id: 1,
-    title: 'Learn',
-    author: 'Auteur 1',
-    image: '/MPI.png',
-    slug: 'livre-1'
-  },
-  {
-    id: 2,
-    title: 'Learn',
-    author: 'Auteur 2',
-    image: '/fondement.jpeg',
-    slug: 'livre-2'
-  },
-  {
-    id: 3,
-    title: 'Learn',
-    author: 'Auteur 2',
-    image: '/windows.jpg',
-    slug: 'livre-3'
-  },
-  {
-    id: 4,
-    title: 'Learn',
-    author: 'Auteur 4',
-    image: '/bd.jpeg',
-    slug: 'livre-4'
-  },
-  // Ajoutez d'autres livres si nécessaire
-];
 interface Book {
   id: number;
   date: string;
@@ -64,7 +33,7 @@ const BookPage = () => {
     headers.append('keywords', keywords);
     headers.append('genre', 'Informatique');
     console.log("GEGHGEO");
-    const request = new Request('http://localhost:3000/api/books', {
+    const request = new Request(`${API_URL}/api/books`, {
       method: 'GET',
       headers: headers,
     });
@@ -96,7 +65,7 @@ const BookPage = () => {
     headers.append('numberBooks', '12');
     headers.append('keywords', keywords);
     headers.append('genre', 'Informatique');
-    const request = new Request('http://localhost:3000/api/books', {
+    const request = new Request(`${API_URL}/api/books`, {
       method: 'GET',
       headers: headers,
     });

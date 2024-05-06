@@ -8,6 +8,7 @@ import { AvailabilitiesModal } from '@/components/ui/availabilities-loans';
 import { ReservationModal } from '@/components/ui/ReservationModal'
 import { boolean } from 'zod';
 import { useParams } from 'next/navigation';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Définir une interface pour les données du livre
 interface Book {
@@ -46,7 +47,7 @@ const LivrePage = () => {
   const fetchBook = async () => {
     console.log(bookId);
     // fetch the book data from the API
-    const request = new Request('http://localhost:3000/api/books/id/' + bookId,{
+    const request = new Request(`${API_URL}/api/books/id/` + bookId,{
       method: 'GET'
     });
     const response = await fetch(request);

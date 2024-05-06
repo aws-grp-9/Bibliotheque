@@ -6,40 +6,9 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import handleSearch from "@/components/ui/header";
 import searchQuery from "@/components/ui/header";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 
-// Liste des livres avec leurs détails
-const books = [
-  {
-    id: 1,
-    title: 'Learn',
-    author: 'Auteur 1',
-    image: '/chimie analytique.jpg',
-    slug: 'livre-1'
-  },
-  {
-    id: 2,
-    title: 'Learn',
-    author: 'Auteur 2',
-    image: '/chimie organique.jpg',
-    slug: 'livre-2'
-  },
-  {
-    id: 3,
-    title: 'Learn',
-    author: 'Auteur 2',
-    image: '/comprendre la chimie.jpg',
-    slug: 'livre-3'
-  },
-  {
-    id: 4,
-    title: 'Learn',
-    author: 'Auteur 4',
-    image: '/Mon livre de chimie.jpg',
-    slug: 'livre-4'
-  },
-  // Ajoutez d'autres livres si nécessaire
-];
 interface Book {
   id: number;
   date: string;
@@ -62,7 +31,7 @@ const BookPage = () => {
     headers.append('numberBooks', '12');
     headers.append('keywords', keywords);
     headers.append('genre', 'chimie');
-    const request = new Request('http://localhost:3000/api/books', {
+    const request = new Request(`${API_URL}/api/books`, {
       method: 'GET',
       headers: headers,
     });
@@ -94,7 +63,7 @@ const BookPage = () => {
     headers.append('numberBooks', '12');
     headers.append('keywords', keywords);
     headers.append('genre', 'chimie');
-    const request = new Request('http://localhost:3000/api/books', {
+    const request = new Request(`${API_URL}/api/books`, {
       method: 'GET',
       headers: headers,
     });
