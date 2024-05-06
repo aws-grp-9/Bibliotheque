@@ -67,6 +67,11 @@ const morelinks = [
         title:"Ma liste de prets",
         href:"/dashboard/mesprets"
     },
+    {
+        id:6,
+        title:"Ma liste de prets",
+        href:"/dashboard/decoonxion"
+    },
 ];
 
 //export default Chat;
@@ -184,6 +189,13 @@ export default function Navbar(){
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
                                                     <BookOpen size={20}/>
                                                     Mes prets
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem asChild className="rounded-md">
+                                                <Link href="/dashboard/deconnexion"
+                                                      className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
+                                                    <User size={20}/>
+                                                    Se déconnecter
                                                 </Link>
                                             </DropdownMenuItem>
 

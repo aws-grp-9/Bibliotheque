@@ -42,7 +42,7 @@ const AdminDashboard = () => {
                         <span>Notifications</span>
                     </Button>
                 </Link>
-                <Link href="/calendrier">
+                <Link href="/bibliothecaire/calendrier">
                     <Button variant="sky" size="lg" className="flex items-center justify-center space-x-2 py-10 px-14 text-center">
                         <FaCalendarAlt className="text-7xl" />
                         <span>Calendrier</span>
