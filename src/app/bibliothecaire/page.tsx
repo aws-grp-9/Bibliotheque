@@ -3,7 +3,7 @@ import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
-import { FaBook, FaNewspaper, FaUsers, FaBan, FaChartPie, FaBell, FaCalendarAlt, FaComments } from 'react-icons/fa'; // Importation des icônes
+import { FaBook, FaNewspaper, FaUsers, FaBan, FaChartPie, FaBell, FaCalendarAlt, FaComments, FaPlus } from 'react-icons/fa'; // Importation des icônes
 
 const AdminDashboard = () => {
     // Contenu du tableau de bord de l'administrateur
@@ -36,13 +36,7 @@ const AdminDashboard = () => {
                         <span>Bannir des utilisateurs</span>
                     </Button>
                 </Link>
-                <Link href="/statistiques">
-                    <Button variant="sky" size="lg" className="flex items-center justify-center space-x-2 py-10 px-14 text-center">
-                        <FaChartPie className="text-7xl" />
-                        <span>Statistiques</span>
-                    </Button>
-                </Link>
-                <Link href="/notifications">
+                <Link href="/bibliothecaire/notifications">
                     <Button variant="success" size="lg" className="flex items-center justify-center space-x-2 py-10 px-14 text-center">
                         <FaBell className="text-7xl" />
                         <span>Notifications</span>
@@ -60,6 +54,13 @@ const AdminDashboard = () => {
                         <span>Commentaires</span>
                     </Button>
                 </Link>
+                        <Link href="/bibliothecaire/ajouterarticle">
+                            <Button variant="success" size="lg" className="flex items-center justify-center space-x-2 py-10 px-14 text-center">
+                                <FaPlus className="text-7xl" />
+                                <span>Ajouter un article</span>
+                            </Button>
+                        </Link>
+                    
             </div>
         </section>
     );
@@ -75,6 +76,10 @@ const HomeBibliothecairePage = () => {
             <main className="bg-blue-100 min-h-screen">
                 {/* Section du tableau de bord */}
                 <AdminDashboard />
+                
+                {/* Ajouter un article */}
+                <section className="max-w-7xl mx-auto mb-5 my-5 bg-blue-100 px-4">
+                </section>
                 
                 {/* Autres sections de la page */}
             </main>

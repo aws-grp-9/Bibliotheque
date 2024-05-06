@@ -52,7 +52,6 @@ const AjouterLivrePage = () => {
                     </form>
                 </div>
             </main>
-            <Footer />
         </>
     );
 };

@@ -1,7 +1,6 @@
 "use client";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import Header from "@/components/auth/header";
-import SocialButtons from "@/components/auth/social";
 import BackButton from "@/components/auth/back-button";
 
 interface CardWrapperProps {
@@ -24,11 +23,6 @@ export default function CardWrapper({
             <CardContent>
                 {children}
             </CardContent>
-            {showSocials && (
-                <CardFooter>
-                    <SocialButtons/>
-                </CardFooter>
-            )}
             <CardFooter>
                 <BackButton backButtonHref={backButtonHref} backButtonLabel={backButtonLabel}/>
             </CardFooter>

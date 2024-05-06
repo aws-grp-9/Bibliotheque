@@ -32,7 +32,7 @@ const NewsSection = () => {
         },
         {
             id: 3,
-            title: 'Semaine de la culture à l/université',
+            title: 'Semaine de la culture à luniversité',
             date: '2024-04-01',
             link: '/semaine-innovation',
             image: '/conf3.jpeg' // Chemin vers l'image de la semaine de l'innovation

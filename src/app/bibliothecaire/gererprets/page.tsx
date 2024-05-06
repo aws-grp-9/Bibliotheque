@@ -3,22 +3,15 @@ import React, { useState } from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 
-interface Utilisateur {
-    id: number;
-    nom: string;
-    email: string;
-    role: string;
-}
-
-const GestionUtilisateursPage = () => {
-    const [utilisateurs, setUtilisateurs] = useState<Utilisateur[]>([
-        { id: 1, nom: 'John Doe', email: 'john@example.com', role: 'Bibliothécaire' },
-        { id: 2, nom: 'Jane Smith', email: 'jane@example.com', role: 'Étudiant' },
-        { id: 3, nom: 'Michael Johnson', email: 'michael@example.com', role: 'Professeur' }
+const SuiviEmpruntsPage = () => {
+    const [emprunts, setEmprunts] = useState([
+        { id: 1, livre: 'Introduction à la physique', emprunteur: 'John Doe', dateEmprunt: '2024-05-10', dateRetourPrevue: '2024-06-10', retourne: false },
+        { id: 2, livre: 'Architecture des ordinateurs', emprunteur: 'Jane Smith', dateEmprunt: '2024-05-15', dateRetourPrevue: '2024-06-15', retourne: false },
+        { id: 3, livre: 'Programmation web', emprunteur: 'Michael Johnson', dateEmprunt: '2024-05-20', dateRetourPrevue: '2024-06-20', retourne: false }
     ]);
 
-    const handleDelete = (id: number) => {
-        setUtilisateurs(utilisateurs.filter(utilisateur => utilisateur.id !== id));
+    const handleReturn = (id: number) => {
+        setEmprunts(emprunts.map(emprunt => emprunt.id === id ? { ...emprunt, retourne: true } : emprunt));
     };
 
     return (
@@ -26,24 +19,28 @@ const GestionUtilisateursPage = () => {
             <Navbar />
             <main className="bg-gray-100 min-h-screen flex justify-center items-center">
                 <div className="bg-white p-8 rounded-lg shadow-lg">
-                    <h2 className="text-3xl font-semibold mb-6">Gestion des utilisateurs</h2>
+                    <h2 className="text-3xl font-semibold mb-6">Suivi des emprunts en cours</h2>
                     <table className="min-w-full">
                         <thead>
                             <tr className="bg-gray-100">
-                                <th className="text-left py-2 px-4">Nom</th>
-                                <th className="text-left py-2 px-4">Email</th>
-                                <th className="text-left py-2 px-4">Rôle</th>
+                                <th className="text-left py-2 px-4">Livre</th>
+                                <th className="text-left py-2 px-4">Emprunteur</th>
+                                <th className="text-left py-2 px-4">Date d'emprunt</th>
+                                <th className="text-left py-2 px-4">Date de retour prévue</th>
+                                <th className="text-left py-2 px-4">Statut</th>
                                 <th className="text-left py-2 px-4">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {utilisateurs.map(utilisateur => (
-                                <tr key={utilisateur.id}>
-                                    <td className="py-2 px-4">{utilisateur.nom}</td>
-                                    <td className="py-2 px-4">{utilisateur.email}</td>
-                                    <td className="py-2 px-4">{utilisateur.role}</td>
+                            {emprunts.map(emprunt => (
+                                <tr key={emprunt.id} className={emprunt.retourne ? "bg-green-100" : ""}>
+                                    <td className="py-2 px-4">{emprunt.livre}</td>
+                                    <td className="py-2 px-4">{emprunt.emprunteur}</td>
+                                    <td className="py-2 px-4">{emprunt.dateEmprunt}</td>
+                                    <td className="py-2 px-4">{emprunt.dateRetourPrevue}</td>
+                                    <td className="py-2 px-4">{emprunt.retourne ? 'Retourné' : 'En cours'}</td>
                                     <td className="py-2 px-4">
-                                        <button onClick={() => handleDelete(utilisateur.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Supprimer</button>
+                                        {!emprunt.retourne && <button onClick={() => handleReturn(emprunt.id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Retourner</button>}
                                     </td>
                                 </tr>
                             ))}
@@ -56,5 +53,5 @@ const GestionUtilisateursPage = () => {
     );
 };
 
-export default GestionUtilisateursPage;
+export default SuiviEmpruntsPage;
 
