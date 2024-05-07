@@ -22,7 +22,9 @@ export async function GET(request: Request) {
     }
     let result = null;
     if (loanType === 'all') {
+        
         result = await getListUsersLoans(limit,keywords,excluded_ids);
+        
     } else if (loanType === 'pending') {
         result = await getListPendingLoans(limit,keywords,excluded_ids);
     } else if (loanType === 'returned') {

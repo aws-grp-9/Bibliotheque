@@ -55,6 +55,8 @@ const SuiviEmpruntsPage = () => {
         if (response.status === 200) {
             console.log(query_data.result);
             setEmprunts(query_data.result);
+        } else {
+            console.log(query_data.message);
         }
 
     }

@@ -29,15 +29,13 @@ async function getListUsersLoans(limit: string= "10",keywords : string = '',excl
     try {
         let query = '';
         let values = [];
-        console.log(keywords);
         if (keywords === ''){
-            query =  'select * from public."Loans" and id != ALL($2) limit $1';
+            query =  'select * from public."Loans" where id != ALL($2) limit $1';
             values = [limit,excluded_ids];
         }else {
             query =  'select * from public."Loans" where id != ALL($2) and (id_book in (select id from public."Books" where title ilike $3) or id_user in (select id from public."User" where name ilike $3)) limit $1';
             values = [limit,excluded_ids, '%'+keywords+'%'];
         }
-
         const result = await pool.query(
             query,
             values
@@ -45,7 +43,6 @@ async function getListUsersLoans(limit: string= "10",keywords : string = '',excl
         for (let i = 0; i < result.rows.length; i++) {
             const userInfos = await getInfosUser(result.rows[i].id_user);
             const bookInfos = await getBook(result.rows[i].id_book);
-            console.log(userInfos);
             delete userInfos.message.id;
             delete bookInfos.message.id;
             delete userInfos.message.admin;
