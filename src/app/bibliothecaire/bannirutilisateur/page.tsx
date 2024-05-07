@@ -3,8 +3,38 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
 
 const GestionUtilisateursPage = () => {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const router = useRouter();
+    const checkAdmin = async () => {
+        const supabase = createClient();
+        const { data, error } = await supabase.auth.getUser();
+        if (error || !data) {
+            router.push('/');
+        }
+        const headers1 = new Headers();
+        headers1.append('Content-Type', 'application/json');
+        headers1.append('email', data?.user?.email || '');
+        const response1 = await fetch(`${API_URL}/api/user/email`,{
+            method: 'GET',
+            headers: headers1,
+        });
+        const query_data1 = await response1.json();
+        if (response1.status !== 200) {
+            router.push('/');
+        }
+        if (!query_data1.result.admin) {
+            router.push('/');
+        }
+    }
+
+
+    React.useEffect(() => {
+        checkAdmin();
+    } , []);
     // État local pour stocker la liste des utilisateurs
     const [utilisateurs, setUtilisateurs] = useState<any[]>([]);
     

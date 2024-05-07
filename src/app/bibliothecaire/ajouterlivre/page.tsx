@@ -6,7 +6,8 @@ import Footer from '@/components/ui/footer';
 import { FormError } from "@/components/ui/form-error";
 import { FormSuccess } from "@/components/ui/form-success";
 import { createClient } from '@/utils/supabase/client';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import Script from 'next/script';
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;

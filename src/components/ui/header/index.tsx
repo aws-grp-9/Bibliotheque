@@ -63,11 +63,6 @@ const morelinks = [
         href:"/dashboard/profile"
     },
     {
-        id:5,
-        title:"Ma liste de prets",
-        href:"/dashboard/mesprets"
-    },
-    {
         id:6,
         title:"Ma liste de prets",
         href:"/dashboard/decoonxion"
@@ -177,26 +172,16 @@ export default function Navbar(){
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem asChild className="rounded-md">
-                                                <Link href="/dashboard/profile"
-                                                      className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
-                                                    <User size={20}/>
-                                                    Profil
-                                                </Link>
-                                            </DropdownMenuItem>
-
-                                            <DropdownMenuItem asChild className="rounded-md">
                                                 <Link href="/dashboard/mesprets"
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
                                                     <BookOpen size={20}/>
                                                     Mes prets
                                                 </Link>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem asChild className="rounded-md">
-                                                <Link href="/dashboard/deconnexion"
-                                                      className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
-                                                    <User size={20}/>
-                                                    Se déconnecter
-                                                </Link>
+                                            <DropdownMenuItem
+                                                className="rounded-md text-red-600 hover:text-red-600 flex gap-2 items-center w-full h-full cursor-pointer" onClick={() => {signOut().then(() => location.reload())}}>
+                                                <DoorOpen size={20}/>
+                                                Se déconnecter
                                             </DropdownMenuItem>
 
                                         </DropdownMenuContent>
@@ -214,11 +199,7 @@ export default function Navbar(){
                                                     Tableau de bord
                                                 </Link>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem
-                                                className="rounded-md text-red-600 hover:text-red-600 flex gap-2 items-center w-full h-full" onClick={() => {signOut().then(() => location.reload())}}>
-                                                <DoorOpen size={20}/>
-                                                Se déconnecter
-                                            </DropdownMenuItem>
+
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 </div>
