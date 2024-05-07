@@ -30,7 +30,7 @@ async function getListUsersLoans(limit: string= "10",keywords : string = '',excl
         let query = '';
         let values = [];
         console.log(keywords);
-        if (keywords = ''){
+        if (keywords === ''){
             query =  'select * from public."Loans" and id != ALL($2) limit $1';
             values = [limit,excluded_ids];
         }else {
