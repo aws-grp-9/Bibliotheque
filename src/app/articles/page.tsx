@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 
 const articles = [
@@ -33,16 +34,21 @@ const ArticlePage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {articles.map((article) => (
               <Link key={article.slug} href={`/articles/${article.slug}`}>
-                <div className="group relative overflow-hidden border border-gray-200 rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105">
-                  <img
-                    src={`${article.slug}.jpg`}
-                    alt={article.title}
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-white">
-                    <h3 className="text-lg font-semibold mb-2">{article.title}</h3>
-                    <p className="text-sm text-gray-600">{article.description}</p>
+                <div>
+                  <div className="group relative overflow-hidden border border-gray-200 rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105">
+                    <div className="h-64 relative">
+                      <Image
+                        src={`/${article.slug}.jpg`}
+                        alt={article.title}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-white">
+                      <h3 className="text-lg font-semibold mb-2">{article.title}</h3>
+                      <p className="text-sm text-gray-600">{article.description}</p>
+                    </div>
                   </div>
                 </div>
               </Link>
