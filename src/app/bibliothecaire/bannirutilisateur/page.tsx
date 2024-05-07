@@ -14,6 +14,7 @@ const GestionUtilisateursPage = () => {
         const { data, error } = await supabase.auth.getUser();
         if (error || !data) {
             router.push('/');
+            return;
         }
         const headers1 = new Headers();
         headers1.append('Content-Type', 'application/json');
@@ -25,9 +26,11 @@ const GestionUtilisateursPage = () => {
         const query_data1 = await response1.json();
         if (response1.status !== 200) {
             router.push('/');
+            return;
         }
         if (!query_data1.result.admin) {
             router.push('/');
+            return;
         }
     }
 

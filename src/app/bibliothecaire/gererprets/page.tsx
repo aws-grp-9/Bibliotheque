@@ -25,6 +25,7 @@ const SuiviEmpruntsPage = () => {
         const { data, error } = await supabase.auth.getUser();
         if (error || !data) {
             router.push('/');
+            return;
         }
         const headers1 = new Headers();
         headers1.append('Content-Type', 'application/json');
@@ -36,9 +37,11 @@ const SuiviEmpruntsPage = () => {
         const query_data1 = await response1.json();
         if (response1.status !== 200) {
             router.push('/');
+            return;
         }
         if (!query_data1.result.admin) {
             router.push('/');
+            return;
         }
     };
 
@@ -122,7 +125,7 @@ const SuiviEmpruntsPage = () => {
     return (
         <>
             <Navbar />
-            <main className="min-h-screen grid justify-center content-center items-center w-svw">
+            <main className="min-h-screen grid justify-center content-center items-center">
                 <div className="p-8 rounded-lg shadow-lg dark:bg-gray-800 bg-white">
                     <h2 className="text-3xl font-semibold mb-6">Suivi des emprunts</h2>
                     <div className="flex justify-between mb-4">

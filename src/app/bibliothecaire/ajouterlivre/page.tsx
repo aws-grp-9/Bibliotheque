@@ -151,9 +151,10 @@ const AjouterLivrePage = () => {
     const checkAdmin = async () => {
         const supabase = createClient();
         const { data, error } = await supabase.auth.getUser();
-
+        console.log(data.user);
         if (error || !data) {
             router.push('/');
+            return;
         }
         const headers1 = new Headers();
         headers1.append('Content-Type', 'application/json');
@@ -165,10 +166,11 @@ const AjouterLivrePage = () => {
         const query_data1 = await response1.json();
         if (response1.status !== 200) {
             router.push('/');
+            return;
         }
-        
         if (!query_data1.result.admin) {
             router.push('/');
+            return;
         }
     }
 
