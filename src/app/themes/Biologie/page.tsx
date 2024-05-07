@@ -63,7 +63,7 @@ const BookPage = () => {
     headers.append('numberBooks', '12');
     headers.append('keywords', keywords);
     headers.append('genre', 'biologie');
-    const request = new Request(`${API_URL}/api/books`, {
+    const request = new Request(`${API_URL}/api/loans`, {
       method: 'GET',
       headers: headers,
     });
@@ -71,7 +71,7 @@ const BookPage = () => {
     const data = await response.json();
     console.log(data);
     if (data.result === undefined || data.result.length === 0) {
-      console.log('No books found');
+      console.log('No loans found');
       console.log('Booklist:', bookList);
       // hide the button
       if (!fetchMoreButton!.classList.contains('hidden')) {

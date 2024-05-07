@@ -1,5 +1,6 @@
 import pool from './connection';
 import { createClient } from '@/utils/supabase/client';
+import { getInfosFromEmail } from './db_users';
 
 const cover1 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKIAAAC6CAYAAAAtd5btAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAQzSURBVHgB7dw/aFVnHMfhX4rgoGRrzJCpdhKFdEvBTRCX0iVL7RKkc8kobcdWMqalWy1kqTpkabtIwKHgcDcDFie1S4aoW4hDJpv3FgdLjiQS9XtOngcuN+Rmunzue87752bixa6C9+yDggBCJIIQiSBEIgiRCEIkghCJIEQiCJEIQiSCEIkgRCIIkQhCJIIQiSBEIgiRCEIkghCJIEQiCJEIQiSCEIkgRCIIkQhCJIIQiSBEIgiRCEIkghCJIEQiHKue29x6UhzM9OSpStO7ENc37tftB3fGz5tbT4uDm56cqoW5y3XpzIVKMdGXf11899Gofv7rF/EdouX5azU7c64SxI+I2zvPa2lteRwih6u9p0Lchzb6fffnD/Xw2ePi8LUPeYroWbMIj47YEFdGN0V4hERemtsleWV0ow6qzQZvXfm1eFV7L9sHO1nkiPi6CNuSw/effVsMS2SIXTPk2ZmzdfXiYp08fqIYlrgQ20J112yuRcgwxYXYNUFpo2Hi1hSHIy7Erp2TlIVX3o64EJMWWXl3HAMjghCJIEQiCJEIQiSCEIkgRCIIkQhCJIIQiSBEIgiRCEIkghCJIEQiCJEIQiSCEIkgRCIIkQhCJIIQiSBEIgiRCEIkghCJIEQiCJEIQiSCEIkgRCIIkQhCJIIQiSBEIgiRCEIkghCJIEQiCJEIQiSCEIkgRCIIkQhCJIIQiSBEIgiRCEIkghCJIEQiCJEIQiSCEIkgRCIIkQhCJIIQiSBEIgiRCEIkghCJIEQiCJEIQiSCEIkgRCIIkQhCJIIQiSBEIgiRCEIkghCJIEQiCJEIQiSCEIlwrHpme+d5bW497XxtcfWb4lWbW08qXW9CbJGtjG7W6r3fxz93/c36xv2if3oT4uq9P4rhco9IBCESQYhE6N2s+aXZmbN1/vSnNT05VSePnyi63X5wZ/xI1rsQW3hXLy7uhniu2J8+rCT0KsQW4fL8td3nU8Ww9OoecWHusggHqjchttHw0pkLxTD1JsTzp+eK4epNiGbGwxYXouCOprgQ273gXtY3/i6GKy7Ejz/8aM/ft7WwPhxn4s1Ehth1eV5a+7EYpsh7xK5lmjYqLq0td55HpL8iZ83zn3ze+VrbM/3qt6/Hzy7VwxG5xdcmLAtzX4xPZO+lfVWgjYwMR+w6YtvO65q4MDzRC9r/HXCYKoYvOsQ2cbn+5U/2mN+SpM2DiRe7qgfa5GRldKPzq6Qc3K0r12NOM/UmxJfuPhqNHw+fPd59/FMcXBsJ22TwdasT71rvQvy/tqa4vbNd7F/imc7eh8gw+BYfEYRIBCESQYhEECIRhEgEIRJBiEQQIhGESAQhEkGIRBAiEYRIBCESQYhEECIRhEgEIRJBiEQQIhGESAQhEkGIRBAiEYRIBCESQYhEECIRhEgEIRJBiEQQIhGESIR/AeUB4/RuaQogAAAAAElFTkSuQmCC"
 const cover2 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKIAAAC6CAYAAAAtd5btAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAARiSURBVHgB7dw/SJRhHMDxn9FUkC6O1s0RVENTQzbWUoGBDWVNURQVREKL55g0FEl/prSloAZddOyEnIz+gLl25ZZDGtha9wgNxl2onPZ93vt+4JY7p+Pr8z5/3vfaftWE9J9tCwnAEIVgiEIwRCEYohAMUQiGKARDFIIhCsEQhWCIQjBEIRiiEAxRCIYoBEMUgiEKwRCFYIhCMEQhGKIQDFEIhigEQxSCIQrBEIVgiEIwRCEYohAMUQiGKARDFML2yFx1fiG0PqWuzqDJLsTK9FyMvqhE5c2cEW5QCrHc3xN9vd1B0ZbLTxePTc7EjdujxtdEr8cHovvw3iDAzxEXl5bj1Nm7Ky8jbK7xiZmgQF+aq18X4tS5u/FhthpqvsUfy0GBHhGNsHVgQxwcemmELQR5aU6X5PLQq1ivtBr8/H44tFr6p97I97mVkCNiufbFNZK2HMae3QwVCzLE8cm3dd9PWw0jw5eivX1nqFhwIaYN67RlU8/TB5dDxYQL8WODBUoaDUu7eUdTag5ciGmhUg/lBECbAxciaZNVW8fbwIRgiEIwRCEYohAMUQiGKARDFIIhCsEQhWCIQjBEIRiiEAxRCIYoBEMUgiEKwRCFYIhCMEQhGKIQDFEIhigEQxSCIQrBEIVgiEIwRCEYohAMUQiGKARDFIIhCsEQhWCIQjBEIRiiEAxRCIYoBEMUgiEKwRCFYIhCMEQhGKIQDFEIhigEQxSCIQrBEIVgiEIwRCEYohAMUQiGKARDFIIhCsEQhWCIQjBEIRiiEAxRCIYoBEMUgiEKwRCFYIhCMEQhGKIQDFEIhigEQxSCIQrBEIVgiEIwRCEYohAMUQiGKITtkZnFpeWozn+r/9mPn3H0xGBoterXhaDLJsTvSz9jcOhl3Hs8WQtuue7fpEgr03Oh/GQT4v0nE6Hico4oBEMUgiEKIbtV8x/dh/fGyWOHYs/uzuho3xlqbOR5JUZfTAVZdiGWujrj6fDllRC1NlPTn4IuqxBThK/HB6JUGwVVLFnNEcu3ThthQWUTYhoN+84cCRVTNiGePH4oVFzZhNjRviNUXLgQO3a5FdOKcCE2Wox4M0Ox4ULcv69U9/0UYg63M2ljcCEe2Len4UnJhasPQ8XEmyPWIjzfW3+bJo2KKcZ036GKBblqvnbxeMPPRp5PxcHu/trZacVLdYEgj/jSgqV8qyfKQ6/qfl6dX4jzVx6FigO7jzhQO85L80W1BvSG9soNDl2eLbcCdIhp4fK+cif6ej1j3gykw4O2XzWRgbRISU/xpfmhmuPzu2HM3UzZhPjH2MTMyuvjbDU+zH4JrV8aCQf6e+L6P3Yntlp2If4t7SmmB+u1dsR5d/Yhqhh8ik8IhigEQxSCIQrBEIVgiEIwRCEYohAMUQiGKARDFIIhCsEQhWCIQjBEIRiiEAxRCIYoBEMUgiEKwRCFYIhCMEQhGKIQDFEIhigEQxSCIQrBEIVgiEIwRCEYohAMUQiGKITfDI3jMlOiX8IAAAAASUVORK5CYII="
@@ -51,21 +52,12 @@ async function addBook(user_token : any,title: string, author: string, date: str
     if (user_token === '') {
         return {success:false,message:'Aucun token fourni'};
     }
-    console.log(`${API_URL}/api/user/email`);
-    const headers1 = new Headers();
-    headers1.append('Content-Type', 'application/json');
-    headers1.append('email', user_token.user?.email || '');
-    const response1 = await fetch(`${API_URL}/api/user/email`,{
-        method: 'GET',
-        headers: headers1,
-    });
-    const query_data1 = await response1.json();
-    if (response1.status !== 200) {
-        return {success:false,message:'Erreur lors de la récupération des données utilisateur'};
+    const userInfos = await getInfosFromEmail(user_token.user?.email || '');
+    if (userInfos.success === false) {
+        return {success:false,message:userInfos.message};
     }
-    
-    if (!query_data1.result.admin) {
-        return {success:false,message:' Vous n\'avez pas les droits pour ajouter un livre'};
+    if (!userInfos.message.admin) {
+        return {success:false,message:'User is not an admin'};
     }
     
     try {

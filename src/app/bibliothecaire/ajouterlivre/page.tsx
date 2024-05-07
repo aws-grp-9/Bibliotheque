@@ -91,10 +91,11 @@ const AjouterLivrePage = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        setSuccess(undefined);
         const supabase = createClient();
-        const user_token = await supabase.auth.getUser();
+        const {data,error} = await supabase.auth.getUser();
         const requestBody = {
-            user_token : user_token,
+            user_token : data,
             title: titre,
             author: auteur,
             genre: genre,
@@ -108,7 +109,10 @@ const AjouterLivrePage = () => {
             console.log('Please fill in all required fields');
             return;
         }
-
+        if (!/^\d{13}$/.test(isbn)) {
+            setError('ISBN doit être composé de 13 chiffres.');
+            return;
+        }
         try {
             const response = await fetch(`${API_URL}/api/books`, {
             method: 'POST',
@@ -147,6 +151,7 @@ const AjouterLivrePage = () => {
     const checkAdmin = async () => {
         const supabase = createClient();
         const { data, error } = await supabase.auth.getUser();
+
         if (error || !data) {
             router.push('/');
         }
@@ -161,6 +166,7 @@ const AjouterLivrePage = () => {
         if (response1.status !== 200) {
             router.push('/');
         }
+        
         if (!query_data1.result.admin) {
             router.push('/');
         }

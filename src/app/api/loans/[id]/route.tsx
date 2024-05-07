@@ -50,11 +50,11 @@ export async function POST(request: Request,context: any) {
     }, {status: 200});
 }
 
-export async function UPDATE(request: Request,context: any) {
+export async function PATCH(request: Request,context: any) {
     const {params} = context;
     const data = await request.json();
-    const { id_loan } = data;
-    const result = await returnLoan(params.id,id_loan);
+    const { user_token } = data;
+    const result = await returnLoan(params.id,user_token);
 
     if (result.success === false) {
       return NextResponse.json({
