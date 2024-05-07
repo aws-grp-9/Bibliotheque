@@ -153,7 +153,7 @@ const SuiviEmpruntsPage = () => {
                             {emprunts.map((emprunt: any) => {
                                 const isReturned = emprunt.returned;
                                 const isPastDue = !isReturned && new Date(emprunt.end_date) < new Date();
-                                const statusClassName = isReturned ? "bg-green-100" : isPastDue ? "bg-red-100 dark:bg-red-900" : "";
+                                const statusClassName = isReturned ? "bg-green-100 dark:bg-green-900" : isPastDue ? "bg-red-100 dark:bg-red-900" : "";
                                 const statusText = isReturned ? 'Retourné' : isPastDue ? 'En retard' : 'En cours';
                                 return (
                                     <tr key={emprunt.id} className={statusClassName}>
