@@ -1,5 +1,5 @@
 "use client";
-import {AlignJustify, DoorClosed, SunMedium, Moon, Plus, BookOpen, BellPlus, MessageCircle, LayoutDashboard, User, Settings, DoorOpen} from "lucide-react";
+import {AlignJustify, DoorClosed, SunMedium, Moon, Plus, BookOpen, BellPlus, MessageCircle, LayoutDashboard, User, Settings, DoorOpen , Star} from "lucide-react";
 import {clsx} from "clsx";
 import {usePathname} from "next/navigation";
 import {Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTrigger, SheetTitle} from "@/components/ui/sheet";
@@ -150,6 +150,13 @@ export default function Navbar(){
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent aria-label="Static Actions"
                                                              className="rounded-md mr-3 w-[200px]">
+                                            <DropdownMenuItem asChild className="rounded-md text-amber-400">
+                                                <Link href="/bibliothecaire"
+                                                      className="flex gap-2 items-center w-full h-full  py-2 cursor-pointer">
+                                                    <Star size={20}/>
+                                                    Espace Bibliothécaire
+                                                </Link>
+                                            </DropdownMenuItem>
                                             <DropdownMenuItem asChild className="rounded-md">
                                                 <Link href="/bibliothecaire/ajouterlivre"
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
@@ -179,7 +186,7 @@ export default function Navbar(){
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem
-                                                className="rounded-md text-red-600 hover:text-red-600 flex gap-2 items-center w-full h-full cursor-pointer" onClick={() => {signOut().then(() => location.reload())}}>
+                                                className="rounded-md hover:text-red-600 flex gap-2 items-center w-full h-full cursor-pointer" onClick={() => {signOut().then(() => location.reload())}}>
                                                 <DoorOpen size={20}/>
                                                 Se déconnecter
                                             </DropdownMenuItem>
