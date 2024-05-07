@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getIdFromEmail } from '@/lib/db/db_users';
+import { getInfosFromEmail } from '@/lib/db/db_users';
 
 
 export async function GET(request: Request) {
@@ -9,14 +9,15 @@ export async function GET(request: Request) {
         message: 'Email not provided',
       }, {status: 400});
     }
-    const result = await getIdFromEmail(email);
-
+    
+    const result = await getInfosFromEmail(email);
+    
     if (result.success === false) {
       return NextResponse.json({
         message:result.message,
       }, {status: 500});
     }
-
+    console.log("HEH");
     return NextResponse.json({
       result : result.message
     }, {status: 200});

@@ -27,7 +27,7 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
     const headers1 = new Headers();
     headers1.append('Content-Type', 'application/json');
     headers1.append('email', data?.user.email || '');
-    const response1 = await fetch(`${API_URL}/api/user/id`,{
+    const response1 = await fetch(`${API_URL}/api/user/email`,{
       method: 'GET',
       headers: headers1,
     });
@@ -36,7 +36,7 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
       alert('Erreur lors de la récupération de l\'utilisateur');
       return;
     }
-    const user_id = query_data1.result;
+    const user_id = query_data1.result.id;
 
     // check if a loan is already in progress
     const headers2 = new Headers();
