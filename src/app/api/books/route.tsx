@@ -35,8 +35,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
 
     const data = await request.json();
-    const { title, author, date, description , ISBN , genre , image } = data;
-    const result = await addBook(title, author, date, description, ISBN, genre, image);
+    const { user_token, title, author, date, description , ISBN , genre , image } = data;
+    const result = await addBook(user_token,title, author, date, description, ISBN, genre, image);
     
     if (result.success === false) {
       return NextResponse.json({

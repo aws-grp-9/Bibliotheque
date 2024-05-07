@@ -16,15 +16,15 @@ async function getUsers(limit : number = 10) {
     }
 }
 
-async function getIdFromEmail(email: string) {
+async function getInfosFromEmail(email: string) {
     try {
-        const query = 'select id from public."User" where email = $1';
+        const query = 'select * from public."User" where email = $1';
         const values = [email];
         const result = await pool.query(
             query,
             values
         );
-        return {success:true,message:result.rows[0].id}
+        return {success:true,message:result.rows[0]}
     } catch ( error: any ) {
         console.log( error );
         return {success:false,message:error.detail};
@@ -170,4 +170,4 @@ async function getUsername(id: number) {
 // }
 
 
-export { getUsers, createUser , deleteUser, updateUser, getIdUser , getEmail , getInfosUser, getUsername, getIdFromEmail};
+export { getUsers, createUser , deleteUser, updateUser, getIdUser , getEmail , getInfosUser, getUsername, getInfosFromEmail};
