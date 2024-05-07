@@ -35,11 +35,16 @@ const navlinks = [
         title:"Actualités",
         href:"/actualites"
     },
+    {
+        id:5,
+        title:"Nous contacter",
+        href:"/dashboard/newforum"
+    },
 ];
 const morelinks = [
     {
         id:1,
-        title:"Nouveau document",
+        title:"Nouveau livre",
         href: "/dashboard/newdocument",
     },
     {
@@ -49,18 +54,23 @@ const morelinks = [
     },
     {
         id:3,
-        title:"Nouveau forum",
+        title:"Nous contacter",
         href:"/dashboard/newforum"
     },
     {
         id:4,
-        title:"Tableau de bord",
-        href:"/dashboard"
+        title:"Profil",
+        href:"/dashboard/profile"
     },
     {
         id:5,
-        title:"Profil",
-        href:"/dashboard/profile"
+        title:"Ma liste de prets",
+        href:"/dashboard/mesprets"
+    },
+    {
+        id:6,
+        title:"Ma liste de prets",
+        href:"/dashboard/decoonxion"
     },
 ];
 
@@ -146,14 +156,14 @@ export default function Navbar(){
                                         <DropdownMenuContent aria-label="Static Actions"
                                                              className="rounded-md mr-3 w-[200px]">
                                             <DropdownMenuItem asChild className="rounded-md">
-                                                <Link href="/dashboard/newdocument"
+                                                <Link href="/bibliothecaire/ajouterlivre"
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
                                                     <BookOpen size={20}/>
-                                                    Nouveau document
+                                                    Nouveau livre
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem asChild className="rounded-md">
-                                                <Link href="/dashboard/newarticle"
+                                                <Link href="/bibliothecaire/ajouterarticle"
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
                                                     <BellPlus size={20}/>
                                                     Nouvel article
@@ -163,14 +173,29 @@ export default function Navbar(){
                                                 <Link href="/dashboard/newforum"
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
                                                     <MessageCircle size={20}/>
-                                                    Nouvelle discussion
+                                                    Nous contacter
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem asChild className="rounded-md">
-                                                <Link href="/dashboard"
+                                                <Link href="/dashboard/profile"
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
                                                     <User size={20}/>
                                                     Profil
+                                                </Link>
+                                            </DropdownMenuItem>
+
+                                            <DropdownMenuItem asChild className="rounded-md">
+                                                <Link href="/dashboard/mesprets"
+                                                      className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
+                                                    <BookOpen size={20}/>
+                                                    Mes prets
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem asChild className="rounded-md">
+                                                <Link href="/dashboard/deconnexion"
+                                                      className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
+                                                    <User size={20}/>
+                                                    Se déconnecter
                                                 </Link>
                                             </DropdownMenuItem>
 
@@ -187,13 +212,6 @@ export default function Navbar(){
                                                       className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
                                                     <LayoutDashboard size={20}/>
                                                     Tableau de bord
-                                                </Link>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem className="rounded-md" asChild>
-                                                <Link href="/dashboard/settings"
-                                                      className="flex gap-2 items-center w-full h-full py-2 cursor-pointer">
-                                                    <Settings size={20}/>
-                                                    Paramètres
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem
