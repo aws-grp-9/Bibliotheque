@@ -10,14 +10,28 @@ import {getBook} from './db_books';
     returned BOOLEAN
 */
 
-async function getUserLoans(id_user: string) {
+async function getUserLoans(user_token: any) {
     try {
+        const userInfos = await getInfosFromEmail(user_token.email || '');
+        if (userInfos.success === false) {
+            return {success:false,message:userInfos.message};
+        }
+
         const query =  'select * from public."Loans" where id_user = $1';
-        const values = [id_user];
+        const values = [userInfos.message.id];
         const result = await pool.query(
             query,
             values
         );
+        // get book infos for each loan
+        for (let i = 0; i < result.rows.length; i++) {
+            const bookInfos = await getBook(result.rows[i].id_book);
+            if (bookInfos.success === false) {
+                return {success:false,message:bookInfos.message};
+            }
+            result.rows[i].title = bookInfos.message.title;
+            result.rows[i].author = bookInfos.message.author;
+        }
         return {success:true,message:result.rows}
     } catch ( error: any ) {
         console.log( error );
@@ -100,10 +114,15 @@ async function returnLoan(id_loan: string, user_token : any) {
 
 // ajouter liste non retournées, retournées et liste des retards
 
-async function getPendingLoans(id_user: string) {
+async function getPendingLoans(user_token: any) {
     try {
+        const userInfos = await getInfosFromEmail(user_token.email || '');
+        if (userInfos.success === false) {
+            return {success:false,message:userInfos.message};
+        }
+
         const query =  'select * from public."Loans" where id_user = $1 and returned = false';
-        const values = [id_user];
+        const values = [userInfos.message.id];
         const result = await pool.query(
             query,
             values
@@ -145,10 +164,14 @@ async function getListPendingLoans(limit: string= "10",keywords : string = '',ex
     }
 }
 
-async function getReturnedLoans(id_user: string) {
+async function getReturnedLoans(user_token: any) {
     try {
+        const userInfos = await getInfosFromEmail(user_token.email || '');
+        if (userInfos.success === false) {
+            return {success:false,message:userInfos.message};
+        }
         const query =  'select * from public."Loans" where id_user = $1 and returned = true';
-        const values = [id_user];
+        const values = [userInfos.message.id];
         const result = await pool.query(
             query,
             values
@@ -190,10 +213,14 @@ async function getListReturnedLoans(limit: string= "10",keywords : string = '',e
     }
 }
 
-async function getLateLoans(id_user: string) {
+async function getLateLoans(user_token: any) {
     try {
+        const userInfos = await getInfosFromEmail(user_token.email || '');
+        if (userInfos.success === false) {
+            return {success:false,message:userInfos.message};
+        }
         const query =  'select * from public."Loans" where id_user = $1 and end_date < current_date  and returned = false';
-        const values = [id_user];
+        const values = [userInfos.message.id];
         const result = await pool.query(
             query,
             values

@@ -37,11 +37,13 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
       return;
     }
     const user_id = query_data1.result.id;
+    console.log(user_id);
 
     // check if a loan is already in progress
     const headers2 = new Headers();
     headers2.append('LoanType', 'pending');
-    const response2 = await fetch(`${API_URL}/api/loans/`+user_id, {
+    headers2.append('user_token', JSON.stringify(data));
+    const response2 = await fetch(`${API_URL}/api/loans/personnal`, {
       method: 'GET',
       headers: headers2,
     });

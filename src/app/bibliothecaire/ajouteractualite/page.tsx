@@ -34,8 +34,8 @@ const AjouterActualitePage = () => {
         }
         const headers1 = new Headers();
         headers1.append('Content-Type', 'application/json');
-        headers1.append('email', data?.user?.email || '');
-        const response1 = await fetch(`${API_URL}/api/user/email`,{
+        headers1.append('user_token',  JSON.stringify(data));
+        const response1 = await fetch(`${API_URL}/api/user/personnal`,{
             method: 'GET',
             headers: headers1,
         });
@@ -48,7 +48,7 @@ const AjouterActualitePage = () => {
             router.push('/');
             return;
         }
-    }
+    };
 
 
     React.useEffect(() => {
