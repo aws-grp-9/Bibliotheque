@@ -98,6 +98,7 @@ const SuiviEmpruntsPage = () => {
         const { data, error } = await supabase.auth.getUser();
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
+        headers.append('reason', "return");
         const response = await fetch(`${API_URL}/api/loans/${id}`,{
             method: 'PATCH',
             headers: headers,

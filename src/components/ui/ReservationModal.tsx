@@ -6,11 +6,13 @@ import { start } from 'repl';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 type ReservationModalProps = {
   cancelReservationModal : (arg0: boolean) => void;
+  showError : (arg0: string) => void;
+  showSuccess : (arg0: string) => void;
   choosenLibrary : any;
   bookId : string;
 };
 
-export function ReservationModal({ cancelReservationModal , choosenLibrary ,bookId } : ReservationModalProps){
+export function ReservationModal({ cancelReservationModal , showError, showSuccess, choosenLibrary ,bookId } : ReservationModalProps){
 
   const confirmReservation = async () => {
     // get the current date
@@ -21,7 +23,7 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
     const supabase = createClient();
     const { data, error } = await supabase.auth.getUser();
     if (error) {
-      alert('Erreur lors de la récupération de la session');
+      showError('Erreur lors de la récupération de la session');
       return;
     }
     const headers1 = new Headers();
@@ -33,7 +35,7 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
     });
     const query_data1 = await response1.json();
     if (!query_data1.result) {
-      alert('Erreur lors de la récupération de l\'utilisateur');
+      showError('Erreur lors de la récupération de l\'utilisateur');
       return;
     }
     const user_id = query_data1.result.id;
@@ -53,7 +55,7 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
     if (query_data2.result) {
       const alreadyReserved = query_data2.result.find((loan: any) => loan.id_book === bookId);
       if (alreadyReserved) {
-        alert('Vous avez déjà réservé ce livre');
+        showError('Vous avez déjà réservé ce livre');
         return;
       }
     }
@@ -64,10 +66,10 @@ export function ReservationModal({ cancelReservationModal , choosenLibrary ,book
     });
     const query_data3 = await response3.json();
     if (!query_data3.result) {
-      alert('Erreur lors de la réservation');
+      showError('Erreur lors de la réservation');
       return;
     }
-    alert('Réservation effectuée avec succès');
+    showSuccess('Réservation effectuée avec succès');
     cancelReservationModal(false);
   }
 

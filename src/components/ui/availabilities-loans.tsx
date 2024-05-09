@@ -54,7 +54,7 @@ export function AvailabilitiesModal({ setShowModal, bookId , openReservationModa
               <button id='reserve-button'
                 className="ml-2 py-1 px-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
                 onClick={() => openReservation(library.id)}
-                disabled={library.quantity === "0"}>
+                disabled={library.quantity === "0" || library.quantity === null || library.quantity === undefined}>
                 Réserver
               </button>
             </p>

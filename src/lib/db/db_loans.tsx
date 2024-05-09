@@ -262,4 +262,39 @@ async function getListLateLoans(limit: string= "10",keywords : string = '',exclu
     }
 }
 
-export { getUserLoans, addNewLoan, returnLoan, getPendingLoans, getReturnedLoans, getLateLoans , getListUsersLoans, getListPendingLoans, getListReturnedLoans, getListLateLoans };
+async function extendLoan(id_loan: string, user_token : any) {
+    try {
+        if (user_token === '') {
+            return {success:false,message:'Aucun token fourni'};
+        }
+        const userInfos = await getInfosFromEmail(user_token.user?.email || '');
+        if (userInfos.success === false) {
+            return {success:false,message:userInfos.message};
+        }
+        // check if loan owner is the one extending the loan and if the loan is not already extended
+        const query = 'select id_user,extended from public."Loans" where id = $1';
+        const values = [id_loan];
+        const result = await pool.query(
+            query,
+            values
+        );
+        if (result.rows[0].id_user !== userInfos.message.id) {
+            return {success:false,message:'User is not the owner of the loan'};
+        }
+        if (result.rows[0].extended) {
+            return {success:false,message:'Loan is already extended'};
+        }
+        const query2 = 'update public."Loans" set end_date = end_date + interval \'1 month\', extended = true where id = $1';
+        const values2 = [id_loan];
+        const result2 = await pool.query(
+            query2,
+            values2
+        );
+        return {success:true,message:'Loan with id '+id_loan+' extended'}
+    } catch ( error: any ) {
+        console.log( error );
+        return {success:false,message:error.detail};
+    }
+}
+
+export { getUserLoans, addNewLoan, returnLoan, getPendingLoans, getReturnedLoans, getLateLoans , getListUsersLoans, getListPendingLoans, getListReturnedLoans, getListLateLoans , extendLoan };

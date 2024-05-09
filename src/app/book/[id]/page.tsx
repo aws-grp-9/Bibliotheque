@@ -9,6 +9,9 @@ import { ReservationModal } from '@/components/ui/ReservationModal'
 import { useParams } from 'next/navigation';
 import StarRating from 'react-star-ratings';
 import { createClient } from '@/utils/supabase/client';
+import { useToast } from '@/components/ui/use-toast';
+import { Toaster } from '@/components/ui/toaster';
+
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -42,6 +45,8 @@ const LivrePage = () => {
 
   // Infos utilisateur
   const [user,setUser] = useState<any>(null);
+
+  const { toast } = useToast();
 
   // Fonction pour gérer la saisie de l'utilisateur
   const handleReviewChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -173,6 +178,23 @@ const LivrePage = () => {
     fetchReviews();
   }, []);
 
+  const showError = (message:string) =>{
+    toast({
+      variant:"destructive",
+      title:"Erreur",
+      description:message,
+    });
+    cancelReservationModal(false);
+  }
+
+  const showSuccess = (message:string) =>{
+    toast({
+      title:"Succès",
+      description:message,
+    });
+    cancelReservationModal(false);
+  }
+
   return (
     <div className="bg-blanc-100 min-h-screen">
       <Navbar />
@@ -245,10 +267,12 @@ const LivrePage = () => {
           </div>
         </div>
         {showModal && <AvailabilitiesModal setShowModal={setShowModal} bookId={bookId.toString()} openReservationModal={openReservationModal} setChoosenLibrary={setChoosenLibrary} />}
-        {showReservationModal && <ReservationModal  cancelReservationModal={cancelReservationModal}  choosenLibrary={choosenLibrary} bookId={bookId.toString()}/>}
+        {showReservationModal && <ReservationModal  cancelReservationModal={cancelReservationModal}  choosenLibrary={choosenLibrary} bookId={bookId.toString()} showError={showError} showSuccess={showSuccess}/>}
       </div>
       <Footer />
+      <Toaster/>
     </div>
+    
   );
 };
 
