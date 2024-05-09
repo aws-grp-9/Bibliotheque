@@ -1,59 +1,64 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import { Button } from "@/components/ui/button";
 import { FaNewspaper } from 'react-icons/fa'; 
-import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 
 const AjouterActualitePage = () => {
-    const [titre, setTitre] = React.useState('');
-    const [description, setDescription] = React.useState('');
-    const [date, setDate] = React.useState('');
-    const [image, setImage] = React.useState<File | null>(null);
+    const [titre, setTitre] = useState('');
+    const [description, setDescription] = useState('');
+    const [date, setDate] = useState('');
+    const [category, setCategory] = useState('');
+    const [image, setImage] = useState<File | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const router = useRouter();
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
         setImage(file);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Logique pour envoyer les données de l'actualité au serveur
+        setLoading(true);
+        setError('');
+
+        try {
+            const formData = new FormData();
+            formData.append('title', titre);
+            formData.append('description', description);
+            formData.append('date', date);
+            formData.append('category', category);
+            if (image) {
+                formData.append('image', image);
+            }
+
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Une erreur s\'est produite lors de l\'ajout de l\'actualité.');
+                }
+
+                router.push('/');
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        } catch (error) {
+            // Gestion de l'erreur ici
+        }
     };
-
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
-    const router = useRouter();
-    const checkAdmin = async () => {
-        const supabase = createClient();
-        const { data, error } = await supabase.auth.getUser();
-        if (error || !data) {
-            router.push('/');
-            return;
-        }
-        const headers1 = new Headers();
-        headers1.append('Content-Type', 'application/json');
-        headers1.append('email', data?.user?.email || '');
-        const response1 = await fetch(`${API_URL}/api/user/email`,{
-            method: 'GET',
-            headers: headers1,
-        });
-        const query_data1 = await response1.json();
-        if (response1.status !== 200) {
-            router.push('/');
-            return;
-        }
-        if (!query_data1.result.admin) {
-            router.push('/');
-            return;
-        }
-    }
-
-
-    React.useEffect(() => {
-        checkAdmin();
-    } , []);
 
     return (
         <>
@@ -75,13 +80,24 @@ const AjouterActualitePage = () => {
                             <input type="date" id="date" name="date" value={date} onChange={(e) => setDate(e.target.value)} className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500" required />
                         </div>
                         <div className="mb-4">
+                            <label htmlFor="category" className="block text-sm font-medium text-gray-700">Catégorie</label>
+                            <input type="text" id="category" name="category" value={category} onChange={(e) => setCategory(e.target.value)} className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500" required />
+                        </div>
+                        <div className="mb-4">
                             <label htmlFor="image" className="block text-sm font-medium text-gray-700">Image</label>
                             <input id="file-upload" type="file" accept="image/*" onChange={handleImageChange} className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500" />
                         </div>
-                        <Button type="submit" variant="success" size="lg" className="flex items-center justify-center space-x-2 py-3 px-6 text-center">
-                            <FaNewspaper className="text-2xl animate-bounce" />
-                            <span>Ajouter l'actualité</span>
+                        <Button type="submit" variant="success" size="lg" className="flex items-center justify-center space-x-2 py-3 px-6 text-center" disabled={loading}>
+                            {loading ? (
+                                <span>En cours...</span>
+                            ) : (
+                                <>
+                                    <FaNewspaper className="text-2xl animate-bounce" />
+                                    <span>Ajouter l'actualité</span>
+                                </>
+                            )}
                         </Button>
+                        {error && <p className="text-red-500 mt-4">{error}</p>}
                     </form>
                 </div>
             </main>
@@ -91,3 +107,4 @@ const AjouterActualitePage = () => {
 };
 
 export default AjouterActualitePage;
+
