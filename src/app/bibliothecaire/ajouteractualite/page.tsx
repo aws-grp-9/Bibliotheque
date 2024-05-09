@@ -23,40 +23,42 @@ const AjouterActualitePage = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Logique pour envoyer les données de l'actualité au serveur
+        setLoading(true);
+        setError('');
+
+        try {
+            const formData = new FormData();
+            formData.append('title', titre);
+            formData.append('description', description);
+            formData.append('date', date);
+            formData.append('category', category);
+            if (image) {
+                formData.append('image', image);
+            }
+
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Une erreur s\'est produite lors de l\'ajout de l\'actualité.');
+                }
+
+                router.push('/');
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        } catch (error) {
+            // Gestion de l'erreur ici
+        }
     };
-
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
-    const router = useRouter();
-    const checkAdmin = async () => {
-        const supabase = createClient();
-        const { data, error } = await supabase.auth.getUser();
-        if (error || !data) {
-            router.push('/');
-            return;
-        }
-        const headers1 = new Headers();
-        headers1.append('Content-Type', 'application/json');
-        headers1.append('email', data?.user?.email || '');
-        const response1 = await fetch(`${API_URL}/api/user/email`,{
-            method: 'GET',
-            headers: headers1,
-        });
-        const query_data1 = await response1.json();
-        if (response1.status !== 200) {
-            router.push('/');
-            return;
-        }
-        if (!query_data1.result.admin) {
-            router.push('/');
-            return;
-        }
-    }
-
-
-    React.useEffect(() => {
-        checkAdmin();
-    } , []);
 
     return (
         <>
@@ -105,4 +107,3 @@ const AjouterActualitePage = () => {
 };
 
 export default AjouterActualitePage;
-
