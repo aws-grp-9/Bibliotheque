@@ -21,6 +21,7 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
     "@supabase/ssr": "^0.1.0",
     "bcryptjs": "^2.4.3",
     "carousel": "^0.0.3",

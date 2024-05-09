@@ -1,18 +1,23 @@
 import { NextResponse } from 'next/server';
-import { updateUser , getInfosUser , deleteUser} from '@/lib/db/db_users';
+import { updateUser , getInfosUser , deleteUser , getInfosFromEmail} from '@/lib/db/db_users';
 
-export async function GET(request: Request,context: any) {
-    const { params } = context;
-    const result = await getInfosUser(params.id);
-
-    if (result.success === false) {
+export async function GET(request: Request) {
+    let user_token_data = request.headers.get('user_token');
+    const { user } = user_token_data ? await JSON.parse(user_token_data) : { user: null };
+    if (user === null || user === '') {
       return NextResponse.json({
-        message:result.message,
+        message: 'No user token provided',
       }, {status: 500});
     }
-
+    // check if the user is the same as the one in the token
+    const user_infos = await getInfosFromEmail(user.email);
+    if (user_infos.success === false) {
+      return NextResponse.json({
+        message:user_infos.message,
+      }, {status: 500});
+    }
     return NextResponse.json({
-      result : result.message
+      result : user_infos.message
     }, {status: 200});
   }
 

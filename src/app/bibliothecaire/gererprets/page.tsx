@@ -29,8 +29,8 @@ const SuiviEmpruntsPage = () => {
         }
         const headers1 = new Headers();
         headers1.append('Content-Type', 'application/json');
-        headers1.append('email', data?.user?.email || '');
-        const response1 = await fetch(`${API_URL}/api/user/email`,{
+        headers1.append('user_token',  JSON.stringify(data));
+        const response1 = await fetch(`${API_URL}/api/user/personnal`,{
             method: 'GET',
             headers: headers1,
         });
@@ -98,6 +98,7 @@ const SuiviEmpruntsPage = () => {
         const { data, error } = await supabase.auth.getUser();
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
+        headers.append('reason', "return");
         const response = await fetch(`${API_URL}/api/loans/${id}`,{
             method: 'PATCH',
             headers: headers,
