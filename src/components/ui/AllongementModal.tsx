@@ -39,15 +39,13 @@ export function AllongementModal({ cancelAllongementModal , setErrorMessage, set
       return;
     }
     const user_id = query_data1.result.id;
-    console.log(user_id);
-
     // check if the loan have been already extended
     const headers2 = new Headers();
     headers2.append('LoanType', 'all');
     headers2.append('user_token', JSON.stringify(data));
     headers2.append('reason',"extend");
 
-    const response3 = await fetch(`${API_URL}/api/loans/`+user_id, {
+    const response3 = await fetch(`${API_URL}/api/loans/`+choosenLoan, {
       method: 'PATCH',
       headers: headers2,
       body: JSON.stringify({user_token : data}),
