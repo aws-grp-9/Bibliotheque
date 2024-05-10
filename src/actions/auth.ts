@@ -1,7 +1,7 @@
 "use server"
 import { LoginSchema, RegisterSchema } from "@/schemas";
 import { z } from "zod";
-import { getUserByEmail } from "@/data/user";
+import { getInfosFromEmail } from "@/lib/db/db_users";
 import { signIn } from "@/auth";
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
@@ -17,6 +17,16 @@ export const login = async (data: z.infer<typeof LoginSchema>) => {
     }
     const { email, password } = validateFields.data;
     try {
+
+        const userInfos = await getInfosFromEmail(email);
+        if (!userInfos.success) {
+            throw new Error(userInfos.message);
+        }
+        if (userInfos.message.banned) {
+            return {
+                error: "Votre compte a été banni."
+            };
+        }
         const response = await supabase.auth.signInWithPassword({
             email,
             password

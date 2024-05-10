@@ -5,10 +5,16 @@ import Footer from '@/components/ui/footer';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
+import { BannissementModal } from '@/components/ui/BannissementModal';
+import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/components/ui/use-toast";
+
 
 const GestionUtilisateursPage = () => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const router = useRouter();
+    const { toast } = useToast();
+
     const checkAdmin = async () => {
         const supabase = createClient();
         const { data, error } = await supabase.auth.getUser();
@@ -35,41 +41,80 @@ const GestionUtilisateursPage = () => {
     };
 
 
-    React.useEffect(() => {
-        checkAdmin();
-    } , []);
+
     // État local pour stocker la liste des utilisateurs
     const [utilisateurs, setUtilisateurs] = useState<any[]>([]);
-    
-    // État local pour gérer les filtres de recherche
-    const [filtres, setFiltres] = useState({ nom: '', role: '' });
-    
     // État local pour gérer la pagination
-    const [pagination, setPagination] = useState({ page: 1, nombreParPage: 10 });
-    
+    const [pagination, setPagination] = useState(10);
     // État local pour gérer le tri
     const [tri, setTri] = useState<{ colonne: string | null, ordre: string }>({ colonne: null, ordre: 'asc' });
+    const [keyword, setKeyword] = useState('');
+    const [selectedUser, setSelectedUser] = useState<any>({});
+    const [showBannissementModal, setShowBannissementModal] = useState(false);
 
     // Fonction pour charger les utilisateurs depuis la base de données
-    const chargerUtilisateurs = async () => {
-        // Ici, vous pouvez appeler votre fonction pour récupérer les utilisateurs depuis la base de données
-        // Assurez-vous d'ajuster cette fonction en fonction de votre backend
-        // Par exemple :
-        // const utilisateursData = await getUsers();
-        // setUtilisateurs(utilisateursData);
-        // Remarque : pour le moment, nous utilisons des données fictives
-        const utilisateursData = [
-            { id: 1, nom: 'John Doe', email: 'john@example.com', role: 'Admin' },
-            { id: 2, nom: 'Jane Smith', email: 'jane@example.com', role: 'Utilisateur' },
-            { id: 3, nom: 'Michael Johnson', email: 'michael@example.com', role: 'Modérateur' }
-        ];
-        setUtilisateurs(utilisateursData);
+    const chargerUtilisateurs = async (keywords : string = '') => {
+        const supabase = createClient();
+        const { data, error } = await supabase.auth.getUser();
+        if (error || !data) {
+            return;
+        }
+        setUtilisateurs([]);
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('user_token',  JSON.stringify(data));
+        headers.append('numberUsers', pagination.toString());
+        headers.append('keywords' , keywords);
+        // add to excluded_ids the ids of the users in utilisateurs
+        const response = await fetch(`${API_URL}/api/user`,{
+            method: 'GET',
+            headers: headers,
+        });
+        const query_data = await response.json();
+        if (response.status !== 200) {
+            console.log(query_data);
+            return;
+        }
+        const button = document.getElementById('fetchMoreButton');
+        if (button) {
+            button.classList.remove('hidden');
+        }
+        setUtilisateurs(query_data.result);
     };
 
-    // Charger les utilisateurs au chargement de la page
-    useEffect(() => {
-        chargerUtilisateurs();
-    }, []);
+    const chargerPlusUtilisateurs = async ( keywords : string = '') => {
+        const supabase = createClient();
+        const { data, error } = await supabase.auth.getUser();
+        if (error || !data) {
+            return;
+        }
+
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('user_token',  JSON.stringify(data));
+        headers.append('numberUsers', pagination.toString());
+        headers.append('keywords' , keywords);
+        // add to excluded_ids the ids of the users in utilisateurs
+        headers.append('excluded_ids', JSON.stringify(utilisateurs.map((utilisateur) => utilisateur.id)));
+        const response = await fetch(`${API_URL}/api/user`,{
+            method: 'GET',
+            headers: headers,
+        });
+        const query_data = await response.json();
+        if (response.status !== 200) {
+            console.log(query_data);
+            return;
+        }
+        if (query_data.result.length === 0) {
+            // get button and hide it
+            const button = document.getElementById('fetchMoreButton');
+            if (button) {
+                button.classList.add('hidden');
+            }
+        }
+        setUtilisateurs([...utilisateurs, ...query_data.result]);
+    }
+
 
     // Fonction pour supprimer un utilisateur
     const handleDeleteUser = (id: number) => {
@@ -79,45 +124,25 @@ const GestionUtilisateursPage = () => {
         setUtilisateurs(nouveauxUtilisateurs);
     };
 
-    // Fonction pour changer de page
-    const handleChangePage = (nouvellePage: number) => {
-        setPagination({ ...pagination, page: nouvellePage });
-    };
-
-    // Fonction pour changer le nombre d'utilisateurs par page
-    const changerNombreParPage = (nombre: number) => {
-        setPagination({ ...pagination, nombreParPage: nombre });
-    };
 
     // Fonction pour trier les utilisateurs
     const trierUtilisateurs = (colonne: string) => {
+        // Si la colonne est déjà triée, inverser l'ordre
         if (tri.colonne === colonne) {
-            // Inverser l'ordre de tri s'il s'agit de la même colonne
-            setTri({ colonne, ordre: tri.ordre === 'asc' ? 'desc' : 'asc' });
+            setTri({
+                colonne,
+                ordre: tri.ordre === 'asc' ? 'desc' : 'asc'
+            });
         } else {
-            // Trier par la nouvelle colonne par défaut
-            setTri({ colonne, ordre: 'asc' });
+            setTri({
+                colonne,
+                ordre: 'asc'
+            });
         }
     };
 
-    // Fonction pour filtrer par nom
-    const filtrerParNom = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFiltres({ ...filtres, nom: e.target.value });
-    };
-
-    // Fonction pour filtrer par rôle
-    const filtrerParRole = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setFiltres({ ...filtres, role: e.target.value });
-    };
-
-    // Filtrer les utilisateurs en fonction des filtres actifs
-    const utilisateursFiltres = utilisateurs.filter((utilisateur) =>
-        utilisateur.nom.toLowerCase().includes(filtres.nom.toLowerCase()) &&
-        (filtres.role === '' || utilisateur.role === filtres.role)
-    );
-
     // Trier les utilisateurs
-    const utilisateursTries = utilisateursFiltres.sort((a, b) => {
+    const utilisateursTries = utilisateurs.sort((a, b) => {
         if (tri.colonne) {
             if (tri.ordre === 'asc') {
                 return a[tri.colonne] > b[tri.colonne] ? 1 : -1;
@@ -128,45 +153,70 @@ const GestionUtilisateursPage = () => {
         return 0;
     });
 
-    // Pagination
-    const startIndex = (pagination.page - 1) * pagination.nombreParPage;
-    const utilisateursPage = utilisateursTries.slice(startIndex, startIndex + pagination.nombreParPage);
+    const cancelBannissementModal = (showModal: boolean) => {
+        setShowBannissementModal(showModal);
+        setSelectedUser({});
+        chargerUtilisateurs();
+    }
+
+    const setErrorMessage = (message: string) => {
+        toast({
+            variant:"destructive",
+            title:"Erreur",
+            description:message,
+        });
+    }
+
+    const setSuccessMessage = (message: string) => {
+        toast({
+            title:"Succès",
+            description:message,
+        });
+    }
+
+    // Charger les utilisateurs au chargement de la page
+    React.useEffect(() => {
+        checkAdmin();
+        chargerUtilisateurs();
+    }, []);
+    
+    React.useEffect(() => {
+        chargerUtilisateurs(keyword);
+    }, [keyword]);
 
     return (
         <>
             <Navbar />
-            <main className="bg-gray-100 min-h-screen flex justify-center items-center">
-                <div className="bg-white p-8 rounded-lg shadow-lg w-full lg:w-3/4 xl:w-2/3">
+            <main className="bg-gray-100 min-h-screen flex justify-center items-center dark:bg-slate-950">
+                <div className="bg-white p-8 rounded-lg shadow-lg w-full lg:w-3/4 xl:w-2/3 dark:bg-slate-900">
                     <h2 className="text-3xl font-semibold mb-6 text-center">Gestion des utilisateurs</h2>
     
                     {/* Filtrage */}
-                    <div className="flex flex-col lg:flex-row items-center mb-4">
-                        <input type="text" placeholder="Filtrer par nom" value={filtres.nom} onChange={filtrerParNom} className="border rounded mr-2 mb-2 lg:mb-0 px-2 py-1 w-full lg:w-auto" />
-                        <select value={filtres.role} onChange={filtrerParRole} className="border rounded px-2 py-1 w-full lg:w-auto">
-                            <option value="">Filtrer par rôle</option>
-                            {/* Options pour les rôles */}
-                        </select>
+                    <div className="flex flex-col lg:flex-row items-center mb-4 ">
+                        <input type="text" placeholder="Filtrer" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="border rounded mr-2 mb-2 lg:mb-0 px-2 py-1 w-full lg:w-auto dark:border" />
                     </div>
     
                     {/* Tableau */}
                     <table className="min-w-full">
                         <thead>
-                            <tr className="bg-gray-200">
-                                <th onClick={() => trierUtilisateurs('nom')} className="cursor-pointer py-2 px-4 text-left">Nom</th>
+                            <tr className="bg-gray-200 dark:bg-gray-800">
+                                <th onClick={() => trierUtilisateurs('name')} className="cursor-pointer py-2 px-4 text-left">Nom</th>
                                 <th onClick={() => trierUtilisateurs('email')} className="cursor-pointer py-2 px-4 text-left">Email</th>
-                                <th onClick={() => trierUtilisateurs('role')} className="cursor-pointer py-2 px-4 text-left">Rôle</th>
+                                <th onClick={() => trierUtilisateurs('admin')} className="cursor-pointer py-2 px-4 text-left">Administrateur</th>
+                                <th onClick={() => trierUtilisateurs('banned')} className="cursor-pointer py-2 px-4 text-left">Banni</th>
                                 <th className="py-2 px-4 text-left">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {/* Lignes du tableau */}
-                            {utilisateursPage.map((utilisateur) => (
-                                <tr key={utilisateur.id} className="border-b">
-                                    <td className="py-2 px-4">{utilisateur.nom}</td>
+                            {utilisateursTries.map((utilisateur) => (
+                                <tr key={utilisateur.id} className="border-b dark:border-gray-700">
+                                    <td className="py-2 px-4">{utilisateur.name}</td>
                                     <td className="py-2 px-4">{utilisateur.email}</td>
-                                    <td className="py-2 px-4">{utilisateur.role}</td>
+                                    <td className="py-2 px-4">{utilisateur.admin? "Oui" : "Non"}</td>
+                                    <td className="py-2 px-4">{utilisateur.banned ? "Oui" : "Non"} </td>
                                     <td className="py-2 px-4">
-                                        <button onClick={() => handleDeleteUser(utilisateur.id)} className="text-red-500 hover:text-red-700" title="Supprimer"><AiOutlineDelete /></button>
+                                        <button onClick={() => {setSelectedUser(utilisateur);setShowBannissementModal(!showBannissementModal);}} className="text-red-500 hover:text-red-700" title="Supprimer"><AiOutlineDelete /></button>
                                     </td>
                                 </tr>
                             ))}
@@ -176,23 +226,17 @@ const GestionUtilisateursPage = () => {
                     {/* Pagination */}
                     <div className="flex justify-between items-center mt-4">
                         <div>
-                            <span className="mr-2">Nombre par page :</span>
-                            <button onClick={() => changerNombreParPage(10)} className={`border rounded px-2 py-1 ${pagination.nombreParPage === 10 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>10</button>
-                            <button onClick={() => changerNombreParPage(20)} className={`border rounded px-2 py-1 ${pagination.nombreParPage === 20 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>20</button>
-                            <button onClick={() => changerNombreParPage(50)} className={`border rounded px-2 py-1 ${pagination.nombreParPage === 50 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>50</button>
+                            <span className="mr-2">Charger par :</span>
+                            <button onClick={() => setPagination(10)} className={`border rounded px-2 py-1 ${pagination === 10 ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-slate-800 dark:border-none'}`}>10</button>
+                            <button onClick={() => setPagination(20)} className={`border rounded px-2 py-1 ${pagination === 20 ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-slate-800 dark:border-none'}`}>20</button>
+                            <button onClick={() => setPagination(50)} className={`border rounded px-2 py-1 ${pagination === 50 ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-slate-800 dark:border-none'}`}>50</button>
                         </div>
-                        <div>
-                            {/* Pagination */}
-                            {utilisateursTries.length > pagination.nombreParPage && (
-                                <div className="flex items-center">
-                                    <button onClick={() => handleChangePage(pagination.page - 1)} disabled={pagination.page === 1} className={`border rounded-l px-4 py-2 ${pagination.page === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-700'}`}>Précédent</button>
-                                    <button onClick={() => handleChangePage(pagination.page + 1)} disabled={pagination.page === Math.ceil(utilisateursTries.length / pagination.nombreParPage)} className={`border rounded-r px-4 py-2 ml-1 ${pagination.page === Math.ceil(utilisateursTries.length / pagination.nombreParPage) ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-700'}`}>Suivant</button>
-                                </div>
-                            )}
-                        </div>
+                        <button id='fetchMoreButton' onClick={() => chargerPlusUtilisateurs()} className="border rounded px-2 py-1 bg-blue-500 text-white dark:border-none">Charger plus</button>
                     </div>
                 </div>
             </main>
+            { showBannissementModal && <BannissementModal cancelBannissementModal={cancelBannissementModal} setErrorMessage={setErrorMessage} setSuccessMessage={setSuccessMessage} choosenUser = {selectedUser} />}
+            <Toaster />
             <Footer />
         </>
     );

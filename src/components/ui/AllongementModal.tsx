@@ -25,20 +25,6 @@ export function AllongementModal({ cancelAllongementModal , setErrorMessage, set
       alert('Erreur lors de la récupération de la session');
       return;
     }
-    const headers1 = new Headers();
-    headers1.append('Content-Type', 'application/json');
-    headers1.append('user_token', JSON.stringify(data));
-    const response1 = await fetch(`${API_URL}/api/user/personnal`,{
-      method: 'GET',
-      headers: headers1,
-    });
-    const query_data1 = await response1.json();
-    if (!query_data1.result) {
-      setErrorMessage('Erreur lors de la récupération de l\'utilisateur');
-      cancelAllongementModal(false);
-      return;
-    }
-    const user_id = query_data1.result.id;
     // check if the loan have been already extended
     const headers2 = new Headers();
     headers2.append('LoanType', 'all');
