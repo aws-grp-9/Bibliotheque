@@ -160,8 +160,8 @@ const LivrePage = () => {
     }
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    headers.append('email', data?.user?.email || '');
-    const response = await fetch(`${API_URL}/api/user/email`,{
+    headers.append('user_token', JSON.stringify(data));
+    const response = await fetch(`${API_URL}/api/user/personnal`,{
       method: 'GET',
       headers: headers,
     });
