@@ -1,15 +1,32 @@
 import pool from './connection';
 
 // à tester après la connection avec la DB
-async function getUsers(limit : number = 10) { 
+async function getUsers(user_token: any,limit : number = 10,excluded_ids: Array<number> = [],keywords: string = '') { 
     try {
-        const query = 'select * from public."User" limit $1';
-        const values = [limit];
-        const result = await pool.query(
-            query,
-            values
-        );
-        return {success:true,message: result.rows};
+        const userInfos = await getInfosFromEmail(user_token.email);
+        if (userInfos.success === false) {
+            return {success:false,message:userInfos.message};
+        }
+        if (!userInfos.message.admin ) {
+            return {success:false,message:"You are not an admin"};
+        }
+        if (keywords === '') {
+            const query = 'select * from public."User" where id != ALL($2) limit $1';
+            const values = [limit, excluded_ids];
+            const result = await pool.query(
+                query,
+                values
+            );
+            return {success:true,message:result.rows}
+        } else {
+            const query = 'select * from public."User" where id != ALL($2) and (name ilike $3 OR email ilike $3) limit $1';
+            const values = [limit, excluded_ids, '%'+keywords+'%'];
+            const result = await pool.query(
+                query,
+                values
+            );
+            return {success:true,message:result.rows}
+        }
     } catch ( error:any ) {
         console.log( error );
         return {success:false,message :error.detail};
@@ -78,18 +95,41 @@ async function deleteUser(id: string) {
     }
 }
 
-async function updateUser(id:string, email: string, firstName: string, lastName: string, birthDate: string) {
+// async function updateUser(id:string, email: string, firstName: string, lastName: string, birthDate: string) {
+//     try {
+//         const query = 'update public."User" set first_name = $1, last_name = $2, birth_date = $3 email = $4 where id = $5';
+//         const values = [firstName, lastName, birthDate, email, id];
+//         const result = await pool.query(
+//             query,
+//             values
+//         );
+//         return {success:true,message:"User with "+id+" updated successfully !"}
+//     } catch ( error: any ) {
+//         console.log( error );
+//         return  {success:false,message:error.detail};
+//     }
+// }
+
+async function banUser(user: any, id: string) {
     try {
-        const query = 'update public."User" set first_name = $1, last_name = $2, birth_date = $3 email = $4 where id = $5';
-        const values = [firstName, lastName, birthDate, email, id];
+        const userInfos = await getInfosFromEmail(user.email);
+        if (userInfos.success === false) {
+            return {success:false,message:userInfos.message};
+        }
+        if (!userInfos.message.admin ) {
+            return {success:false,message:"You are not an admin"};
+        }
+        const query = 'update public."User" set banned = true where id = $1';
+        console.log(id);
+        const values = [id];
         const result = await pool.query(
             query,
             values
         );
-        return {success:true,message:"User with "+id+" updated successfully !"}
+        return {success:true,message:"User with "+id+" banned successfully !"}
     } catch ( error: any ) {
         console.log( error );
-        return  {success:false,message:error.detail};
+        return {success:false,message:error.detail};
     }
 }
 
@@ -170,4 +210,4 @@ async function getUsername(id: number) {
 // }
 
 
-export { getUsers, createUser , deleteUser, updateUser, getIdUser , getEmail , getInfosUser, getUsername, getInfosFromEmail};
+export { getUsers, createUser , deleteUser, getIdUser , getEmail , getInfosUser, getUsername, getInfosFromEmail , banUser};

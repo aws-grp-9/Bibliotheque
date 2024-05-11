@@ -12,31 +12,6 @@ import Script from 'next/script';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 
-async function loader() {
-    const supabase = createClient();
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data) {
-        return { props: { isAdmin: false } }
-    }
-    const headers1 = new Headers();
-    headers1.append('Content-Type', 'application/json');
-    headers1.append('email', data?.user?.email || '');
-    const response1 = await fetch(`${API_URL}/api/user/email`,{
-        method: 'GET',
-        headers: headers1,
-    });
-    const query_data1 = await response1.json();
-    if (response1.status !== 200) {
-        alert('Erreur lors de la récupération de l\'utilisateur');
-        return { props: { isAdmin: false } }
-    }
-    if (!query_data1.result.admin) {
-        return { props: { isAdmin: false } };
-    }
-    
-    return { props: { isAdmin: true } };
-}
-
 const AjouterLivrePage = () => {
     const [titre, setTitre] = React.useState('');
     const [auteur, setAuteur] = React.useState('');

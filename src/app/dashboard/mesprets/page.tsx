@@ -126,7 +126,7 @@ const BookLoanPage = () => {
                                 <div className="grid items-center justify-between mb-4">
                                     <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
                                         <FaBook className="mr-2 text-blue-500" />
-                                        {book.title}
+                                        {book.title.length > 42 ? `${book.title.slice(0, 42)}...` : book.title}
                                     </h3>
                                     <p className="text-gray-800 font-semibold text-sm dark:text-gray-100">{book.author}</p>
                                 </div>

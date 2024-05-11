@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 'use client'
+=======
+"use client";
+>>>>>>> 9645e1b25661364aae688ef21703200df7ccb2d0
 import React from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
@@ -21,8 +25,8 @@ const AdminDashboard = () => {
         }
         const headers1 = new Headers();
         headers1.append('Content-Type', 'application/json');
-        headers1.append('email', data?.user?.email || '');
-        const response1 = await fetch(`${API_URL}/api/user/email`,{
+        headers1.append('user_token', JSON.stringify(data));
+        const response1 = await fetch(`${API_URL}/api/user/personnal`,{
             method: 'GET',
             headers: headers1,
         });
