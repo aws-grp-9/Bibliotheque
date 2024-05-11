@@ -121,7 +121,7 @@ const BookLoanPage = () => {
                     </div>
                     <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 dark:text-gray-100">Livres Prêtés</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {loanedBooks.map((book) => ( 
+                        {loanedBooks.map((book: { id: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; author: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; start_date: string | number | Date; end_date: string | number | Date; returned: any; }) => ( 
                         <div key={book.id} className="bg-white rounded-lg p-6 shadow-md dark:bg-gray-800">
                                 <div className="grid items-center justify-between mb-4">
                                     <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">

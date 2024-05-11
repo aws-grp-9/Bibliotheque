@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
@@ -30,10 +31,11 @@ const AdminDashboard = () => {
             router.push('/');
             return;
         }
-        if (!query_data1.result.admin) {
+        if (query_data1.result && !query_data1.result.admin) {
             router.push('/');
             return;
         }
+        
     }
 
 

@@ -80,7 +80,7 @@ async function getNewsById(id: string) {
 
 export { getNews, addNews, updateNews, deleteNews, getNewsById };
 
-export async function getNewsHandler(req: NextRequest) {
+export async function GET(req: NextRequest) {
     const limit = parseInt(req.headers.get('numberNews') || '10');
     const keywords = req.headers.get('keywords') || '';
     const category = req.headers.get('category') || '';
@@ -97,10 +97,10 @@ export async function getNewsHandler(req: NextRequest) {
     }, { status: 200 });
 }
 
-export async function addNewsHandler(req: NextRequest) {
+export async function POST(req: NextRequest) {
     const data = await req.json();
     const { title, description, category, image, date } = data;
-    const result = await addNews(title, description, category, image, date);
+    const result = await addNews(title, description, category, image, date,);
     if (result.success === false) {
         return NextResponse.json({
             message: result.message,

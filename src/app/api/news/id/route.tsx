@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getNewsById, deleteNews, updateNews, addNews } from "@/lib/db/db_news";
 
-export async function deleteNewsHandler(req: NextRequest, context: any) {
+export async function DELETE(req: NextRequest, context: any) {
     const { params } = context;
     const result = await deleteNews(params.id);
 
@@ -15,7 +15,7 @@ export async function deleteNewsHandler(req: NextRequest, context: any) {
     }, { status: 200 });
 }
 
-export async function getNewsByIdHandler(req: NextRequest, context: any) {
+export async function GET(req: NextRequest, context: any) {
     const { params } = context;
     const result = await getNewsById(params.id);
 
@@ -25,11 +25,11 @@ export async function getNewsByIdHandler(req: NextRequest, context: any) {
         }, { status: 500 });
     }
     return NextResponse.json({
-        result: result.message
+        result: result.data // Changed from result.message to result.data
     }, { status: 200 });
 }
 
-export async function updateNewsHandler(req: NextRequest, context: any) {
+export async function UPDATE(req: NextRequest, context: any) {
     const { params } = context;
     const data = await req.json();
     const { title, description, category, image } = data;
@@ -45,10 +45,10 @@ export async function updateNewsHandler(req: NextRequest, context: any) {
     }, { status: 200 });
 }
 
-export async function addNewsHandler(req: NextRequest) {
+export async function POST(req: NextRequest) {
     const data = await req.json();
-    const { title, description, date, category, image } = data;
-    const result = await addNews(title, description, date, category, image);
+    const { title, description, category, image, date } = data;
+    const result = await addNews(title, description, category, image, date);
     if (result.success === false) {
         return NextResponse.json({
             message: result.message,

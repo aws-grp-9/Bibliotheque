@@ -22,43 +22,44 @@ const AjouterActualitePage = () => {
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setLoading(true);
-        setError('');
+    event.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+        const formData = new FormData();
+        formData.append('title', titre);
+        formData.append('description', description);
+        formData.append('date', date);
+        formData.append('category', category);
+        if (image) {
+            formData.append('image', image);
+        }
 
         try {
-            const formData = new FormData();
-            formData.append('title', titre);
-            formData.append('description', description);
-            formData.append('date', date);
-            formData.append('category', category);
-            if (image) {
-                formData.append('image', image);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Une erreur s\'est produite lors de l\'ajout de l\'actualité.');
             }
 
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                if (!response.ok) {
-                    throw new Error('Une erreur s\'est produite lors de l\'ajout de l\'actualité.');
-                }
-
-                router.push('/');
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
+            router.push('/');
         } catch (error) {
-            // Gestion de l'erreur ici
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
-    };
+    } catch (error) {
+        // Gestion de l'erreur ici
+    }
+};
+
 
     return (
         <>

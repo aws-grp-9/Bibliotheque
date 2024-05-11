@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getNews, addNews } from "@/lib/db/db_news";
 
-export async function getNewsHandler(req: NextRequest) {
+export async function GET(req: NextRequest) {
     let limit = req.headers.get('numberNews') || '10';
     let keywords = req.headers.get('keywords') || '';
     let category = req.headers.get('category') || '';
@@ -18,10 +18,10 @@ export async function getNewsHandler(req: NextRequest) {
     }, { status: 200 });
 }
 
-export async function addNewsHandler(req: NextRequest) {
+export async function POST(req: NextRequest) {
     const data = await req.json();
-    const {title, description, date, category, image} = data;
-    const result = await addNews(title, description, date, category, image);
+    const { title, description, category, image, date } = data;
+    const result = await addNews(title, description, category, image, date);
     if (result.success === false) {
         return NextResponse.json({
             message: result.message,
