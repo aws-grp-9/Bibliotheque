@@ -113,7 +113,7 @@ export default function Navbar(){
                                     <Link
                                         key={nlink.id}
                                         href={nlink.href}
-                                        className={clsx(pathname == nlink.href ? "text-green-600" : "text-gray-600 dark:text-neutral-50", "font-medium hover:text-green-600 dark:hover:text-green-600 px-4 py-1 text-sm")}
+                                        className={clsx(pathname == nlink.href ? "text-pink-600" : "text-gray-600 dark:text-neutral-50", "font-medium hover:text-green-600 dark:hover:text-green-600 px-4 py-1 text-sm")}
                                     >
                                         {nlink.title}
                                     </Link>
@@ -136,7 +136,7 @@ export default function Navbar(){
                             <div className="hidden md:flex gap-2">
                                 <div
                                     className={`text-sm flex gap-3 items-center font-medium ${/* user ? "hidden": */"flex"}`} id="Disconnected">
-                                    <Link href={"/auth/login"} className="text-green-600 hover:text-green-600/90 flex">Se
+                                    <Link href={"/auth/login"} className="text-green-600 hover:text-pink-600/90 flex">Se
                                         connecter</Link>
                                     ●
                                     <Link href={"/auth/register"} className="hover:text-opacity-90">S{"'"}inscrire</Link>
@@ -229,7 +229,7 @@ export default function Navbar(){
                                             <SheetClose asChild>
                                                 <Link
                                                     href={navlink.href}
-                                                    className={clsx(pathname == navlink.href ? "text-green-600" : "text-gray-600 dark:text-neutral-50", "font-medium hover:text-green-600 dark:hover:text-green-600 px-4 py-1 text-sm")}>
+                                                    className={clsx(pathname == navlink.href ? "text-pink-600" : "text-gray-600 dark:text-neutral-50", "font-medium hover:text-green-600 dark:hover:text-green-600 px-4 py-1 text-sm")}>
                                                     {navlink.title}
                                                 </Link>
                                             </SheetClose>

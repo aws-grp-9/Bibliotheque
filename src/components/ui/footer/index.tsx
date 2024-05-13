@@ -12,26 +12,24 @@ export default function Footer(){
             <div className="flex flex-col md:flex-row justify-between gap-5 flex-wrap">
                 <div className="flex flex-col">
                     <Image height={500} width={500} className="w-[100px] h-[100px]" src="/logo.png" alt=""/>
-                    <h1 className="font-bold max-w-xs uppercase tracking-wide text-lg">UNIVERSITE DE VERSAILLES SAINT QUENTIN</h1>
+                    <h1 className="font-bold max-w-xs uppercase tracking-wide text-lg">BIBLIOTHEQUE UNIVERSITAIRE</h1>
                 </div>
                 <div className="flex flex-col gap-3 border-b border-gray-100 dark:border-neutral-600 py-5 md:border-none">
                     <h1 className="text-gray-600 dark:text-neutral-200">Ressources</h1>
                     <div className="flex flex-col gap-3">
-                        <Link href="" className="text-sm hover:underline font-medium">Articles</Link>
-                        <Link href="" className="text-sm hover:underline font-medium">Documents</Link>
-                        <Link href="" className="text-sm hover:underline font-medium flex gap-1 items-center">
-                            Livres
-                            <Badge className="hover:no-underline">Bientot</Badge>
-                        </Link>
+                        <a>Articles</a>
+                        <a>Documents</a>
+                        <a>Livres</a>
+                        <a>Thèse de doctorat</a>
                     </div>
                 </div>
                 <div className="flex flex-col gap-3 py-5 border-b border-gray-100 dark:border-neutral-600 md:border-none">
                     <h1 className="text-gray-600 dark:text-neutral-200">Légal</h1>
                     <div className="flex flex-col gap-3">
-                        <Link href="" className="text-sm hover:underline font-medium">Confidentialité</Link>
-                        <Link href="" className="text-sm hover:underline font-medium">Condition d{"'"}utilisation</Link>
-                        <Link href="" className="text-sm hover:underline font-medium">Code de conduite</Link>
-                        <Link href="" className="text-sm hover:underline font-medium">FAQ</Link>
+                        <a>Confidentialité</a>
+                        <a>Condition d{"'"}utilisation</a>
+                        <a>Code de conduite</a>
+                        <a>FAQ</a>
                     </div>
                 </div>
                 <div className="flex flex-col gap-3 py-5">

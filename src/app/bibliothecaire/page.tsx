@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-'use client'
-=======
-"use client";
->>>>>>> 9645e1b25661364aae688ef21703200df7ccb2d0
+'use client';
 import React from 'react';
 import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
@@ -17,35 +13,32 @@ const AdminDashboard = () => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const router = useRouter();
     const checkAdmin = async () => {
-        const supabase = createClient();
-        const { data, error } = await supabase.auth.getUser();
-        if (error || !data) {
-            router.push('/');
-            return;
+        try {
+            const supabase = createClient();
+            const { data, error } = await supabase.auth.getUser();
+            if (error || !data) {
+                throw new Error('User data not available');
+            }
+            const headers1 = new Headers();
+            headers1.append('Content-Type', 'application/json');
+            headers1.append('user_token', JSON.stringify(data));
+            const response1 = await fetch(`${API_URL}/api/user/personnal`,{
+                method: 'GET',
+                headers: headers1,
+            });
+            const query_data1 = await response1.json();
+            if (response1.status !== 200 || !query_data1.result || !query_data1.result.admin) {
+                throw new Error('User is not an admin or API request failed');
+            }
+        } catch (error) {
+            console.error('Error while checking admin:', error);
+            router.push('/'); // Rediriger vers la page d'accueil en cas d'erreur
         }
-        const headers1 = new Headers();
-        headers1.append('Content-Type', 'application/json');
-        headers1.append('user_token', JSON.stringify(data));
-        const response1 = await fetch(`${API_URL}/api/user/personnal`,{
-            method: 'GET',
-            headers: headers1,
-        });
-        const query_data1 = await response1.json();
-        if (response1.status !== 200) {
-            router.push('/');
-            return;
-        }
-        if (query_data1.result && !query_data1.result.admin) {
-            router.push('/');
-            return;
-        }
-        
     }
-
 
     React.useEffect(() => {
         checkAdmin();
-    } , []);
+    }, []);
     // Contenu du tableau de bord de l'administrateur
     return (
         <section className="max-w-7xl mx-auto mb-5 my-5 bg-blue-100 px-4">
