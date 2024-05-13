@@ -4,7 +4,7 @@ import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
-import { FaBook, FaNewspaper, FaUsers, FaBan, FaBell, FaCalendarAlt, FaComments, FaPlus } from 'react-icons/fa'; // Importation des icônes
+import { FaBook, FaNewspaper, FaUsers, FaBan, FaBell, FaCalendarAlt, FaComments, FaPlus } from 'react-icons/fa';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -32,14 +32,15 @@ const AdminDashboard = () => {
             }
         } catch (error) {
             console.error('Error while checking admin:', error);
-            router.push('/'); // Rediriger vers la page d'accueil en cas d'erreur
+            router.push('/');
         }
     }
 
     React.useEffect(() => {
         checkAdmin();
     }, []);
-    // Contenu du tableau de bord de l'administrateur
+
+
     return (
         <section className="max-w-7xl mx-auto mb-5 my-5 bg-blue-100 px-4">
             <h2 className="text-4xl font-bold mb-5 my-5 text-center text-blue-700 ">L'équipe bibliothécaire</h2>

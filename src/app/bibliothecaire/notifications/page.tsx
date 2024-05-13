@@ -4,7 +4,6 @@ import Navbar from '@/components/ui/header';
 import Footer from '@/components/ui/footer';
 import { FaUser, FaEnvelope, FaTrash, FaRegEnvelopeOpen, FaSort, FaSearch } from 'react-icons/fa';
 
-// Définition du type pour les notifications
 type Notification = {
     id: number;
     sender: string;
@@ -23,22 +22,19 @@ const NotificationsPage = () => {
 
     // Simulation de récupération des notifications depuis une API ou une base de données
     useEffect(() => {
-        // Ici, vous pouvez ajouter votre logique pour récupérer les notifications depuis l'API ou la base de données
-        // Par exemple :
-        // fetchNotificationsFromAPI().then((data) => {
-        //     setNotifications(data);
-        // });
+        // Ici, nous pouvons ajouter notre logique pour récupérer les notifications depuis l'API ou la base de données
+       
         
-        // Pour l'exemple, je simule des notifications pré-existantes
+        // Pour l'exemple, nous simulons des notifications pré-existantes
         const sampleNotifications: Notification[] = [
-            { id: 1, sender: 'John Doe', message: 'Bonjour, j\'ai une question concernant un livre.', read: false, timestamp: new Date('2024-05-10T08:00:00') },
-            { id: 2, sender: 'Jane Smith', message: 'Je souhaite prolonger mon emprunt.', read: true, timestamp: new Date('2024-05-09T10:00:00') },
-            // Ajoutez d'autres notifications ici
+            { id: 1, sender: 'Luce Lina', message: 'Bonjour, j\'ai une question concernant un livre.', read: false, timestamp: new Date('2024-05-10T08:00:00') },
+            { id: 2, sender: 'Sakgouok Wadjie', message: 'Je souhaite prolonger mon emprunt.', read: true, timestamp: new Date('2024-05-09T10:00:00') },
+            //nous pouvons Ajouter d'autres notifications ici
         ];
         setNotifications(sampleNotifications);
     }, []);
 
-    // Filtrer les notifications en fonction du terme de recherche
+    // Filtrons les notifications en fonction du terme de recherche
     useEffect(() => {
         const filtered = notifications.filter(notification =>
             notification.sender.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -52,13 +48,13 @@ const NotificationsPage = () => {
     const indexOfFirstNotification = indexOfLastNotification - notificationsPerPage;
     const currentNotifications = filteredNotifications.slice(indexOfFirstNotification, indexOfLastNotification);
 
-    // Changer de page
+    // Changons de page
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-    // Trier les notifications
+    // Trions les notifications
     const sortedNotifications = currentNotifications.sort((a, b) => sortOrder === 'asc' ? a.timestamp.getTime() - b.timestamp.getTime() : b.timestamp.getTime() - a.timestamp.getTime());
 
-    // Marquer une notification comme lue
+    // Marquons une notification comme lue
     const markAsRead = (id: number) => {
         const updatedNotifications = notifications.map(notification =>
             notification.id === id ? { ...notification, read: true } : notification
@@ -66,7 +62,7 @@ const NotificationsPage = () => {
         setNotifications(updatedNotifications);
     };
 
-    // Supprimer une notification
+    // Supprimons une notification
     const deleteNotification = (id: number) => {
         const updatedNotifications = notifications.filter(notification => notification.id !== id);
         setNotifications(updatedNotifications);

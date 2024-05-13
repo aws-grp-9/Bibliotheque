@@ -5,15 +5,14 @@ import { Button } from "@/components/ui/button";
 import React from 'react';
 
 export default function UserProfile() {
-    // Supposons que vous avez les détails de l'utilisateur dans un état
     const userDetails = {
-        firstName: 'John',
-        lastName: 'Doe',
-        birthYear: 1990,
+        firstName: 'Luce',
+        lastName: 'lina',
+        birthYear: 2002,
         studyLevel: 'Graduate',
         articlesRead: 50,
         articlesDownloaded: 20,
-        userType: 'Reader', // Vous pouvez également utiliser "Librarian" si c'est un bibliothécaire
+        userType: 'Reader',
     };
 
     return (
