@@ -98,7 +98,7 @@ const BookLoanPage = () => {
     return (
         <>
             <Navbar />
-            <main className="bg-gray-100 min-h-screen dark:bg-slate-950">
+            <main className="bg-gray-100 min-h-screen dark:bg-slate-950" style={{backgroundImage: `url("/biblio3.jpg")`}}>
                 <div className="container mx-auto px-4 py-8 dark:bg-slate-950">
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-center text-gray-800 mb-2 dark:text-gray-100">Informations sur l'utilisateur</h1>

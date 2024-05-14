@@ -55,16 +55,16 @@ const ActualitesPage = () => {
     return (
         <>
             <Navbar />
-            <main className="bg-gradient-to-b from-blue-200 to-blue-300 min-h-screen">
+            <main className="bg-gradient-to-b   min-h-screen" style={{backgroundImage: `url("/biblio3.jpg")`}}>
                 <div className="container mx-auto py-8">
-                    <h2 className="text-5xl text-center text-green-700 font-bold mb-10">Dernières Actualités</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-green-50 gap-8" style={{backgroundImage: `url("/biblio3.jpg")`}}>
+                    <h2 className="text-5xl text-center font-bold mb-10">Dernières Actualités</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-green-50 gap-8">
                         {actualites.map(actualite => (
-                            <div key={actualite.id} className="rounded-lg font-bold shadow-lg overflow-hidden transition duration-800 transform hover:scale-105">
+                            <div key={actualite.id} className="rounded-lg font-bold from-blue-200 to-blue-300 shadow-lg overflow-hidden transition duration-800 transform hover:scale-105">
                                 <div className="flex justify-center items-center h-20">
-                                {actualite.category === 'Education' && <FaNewspaper className="text-8xl text-green-500" />}
-                                {actualite.category === 'Evènements' && <FaBriefcase className="text-8xl text-green-500" />}
-                                {actualite.category === 'entertainment' && <FaStar className="text-20xl text-green-500" />}
+                                {actualite.category === 'Education' && <FaNewspaper className="text-8xl" />}
+                                {actualite.category === 'Evènements' && <FaBriefcase className="text-8xl" />}
+                                {actualite.category === 'entertainment' && <FaStar className="text-20xl " />}
 
                                     {/* Ajoutez d'autres conditions pour d'autres catégories si nécessaire */}
                                 </div>
@@ -73,7 +73,7 @@ const ActualitesPage = () => {
                                         <FaCalendarAlt className="mr-6" />
                                         <span>{actualite.date}</span>
                                     </div>
-                                    <h3 className="text-3xl font-semibold text-green-700 mb-2">{actualite.title}</h3>
+                                    <h3 className="text-3xl font-semibold  mb-2">{actualite.title}</h3>
                                     <p className="text-gray-600 mb-4">{actualite.description}</p>
                                     <div className="flex justify-center space-x-4">
                                         <FaFacebook className="text-blue-500 cursor-pointer" onClick={() => shareOnFacebook(actualite.title, actualite.description)} />

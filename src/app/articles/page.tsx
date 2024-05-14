@@ -59,7 +59,7 @@ const ArticlePage = () => {
   return (
     <>
       <Navbar />
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden" style={{backgroundImage: `url("/biblio3.jpg")`}}>
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold mb-8 text-center">NOS ARTICLES</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

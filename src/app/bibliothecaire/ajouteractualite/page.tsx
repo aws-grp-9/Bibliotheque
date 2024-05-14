@@ -64,7 +64,7 @@ const AjouterActualitePage = () => {
     return (
         <>
             <Navbar />
-            <main className="bg-gray-100 min-h-screen flex justify-center items-center">
+            <main className="bg-gray-100 min-h-screen flex justify-center items-center" style={{backgroundImage: `url("/biblio3.jpg")`}}>
                 <div className="bg-white p-8 rounded-lg shadow-lg">
                     <h2 className="text-3xl text-blue-500 font-semibold mb-6">Ajouter une actualité</h2>
                     <form onSubmit={handleSubmit}>

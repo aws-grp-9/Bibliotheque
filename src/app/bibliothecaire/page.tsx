@@ -42,9 +42,9 @@ const AdminDashboard = () => {
 
 
     return (
-        <section className="max-w-7xl mx-auto mb-5 my-5 bg-blue-100 px-4">
-            <h2 className="text-4xl font-bold mb-5 my-5 text-center text-blue-700 ">L'équipe bibliothécaire</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 bg-blue-100 p-6 rounded-md">
+        <section className="max-w-7xl mx-auto mb-5 my-5 bg-blue-100 px-4" style={{backgroundImage: `url("/biblio3.jpg")`}}>
+            <h2 className="text-4xl font-bold mb-5 my-5 text-center ">L'équipe bibliothécaire</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 bg-blue-100 p-6 rounded-md" style={{backgroundImage: `url("/biblio3.jpg")`}}>
                 <Link href="/bibliothecaire/ajouterlivre">
                     <Button variant="sky" size="lg" className="flex items-center justify-center space-x-2 py-10 px-14 text-center">
                         <FaBook className="text-7xl" />
@@ -102,7 +102,7 @@ const HomeBibliothecairePage = () => {
     return (
         <>
             <Navbar />
-            <main className="bg-blue-100 min-h-screen">
+            <main className="bg-blue-100 min-h-screen" style={{backgroundImage: `url("/biblio3.jpg")`}}>
                 <AdminDashboard />
             </main>
             <Footer />

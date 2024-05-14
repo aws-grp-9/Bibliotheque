@@ -65,7 +65,6 @@ const GestionUtilisateursPage = () => {
         headers.append('user_token',  JSON.stringify(data));
         headers.append('numberUsers', pagination.toString());
         headers.append('keywords' , keywords);
-        // add to excluded_ids the ids of the users in utilisateurs
         const response = await fetch(`${API_URL}/api/user`,{
             method: 'GET',
             headers: headers,
@@ -94,7 +93,6 @@ const GestionUtilisateursPage = () => {
         headers.append('user_token',  JSON.stringify(data));
         headers.append('numberUsers', pagination.toString());
         headers.append('keywords' , keywords);
-        // add to excluded_ids the ids of the users in utilisateurs
         headers.append('excluded_ids', JSON.stringify(utilisateurs.map((utilisateur) => utilisateur.id)));
         const response = await fetch(`${API_URL}/api/user`,{
             method: 'GET',
@@ -106,7 +104,6 @@ const GestionUtilisateursPage = () => {
             return;
         }
         if (query_data.result.length === 0) {
-            // get button and hide it
             const button = document.getElementById('fetchMoreButton');
             if (button) {
                 button.classList.add('hidden');
@@ -115,19 +112,11 @@ const GestionUtilisateursPage = () => {
         setUtilisateurs([...utilisateurs, ...query_data.result]);
     }
 
-
-    // Fonction pour supprimer un utilisateur
     const handleDeleteUser = (id: number) => {
-        // Filtrer les utilisateurs pour obtenir ceux dont l'ID est différent de celui spécifié
         const nouveauxUtilisateurs = utilisateurs.filter((utilisateur) => utilisateur.id !== id);
-        // Mettre à jour la liste des utilisateurs
         setUtilisateurs(nouveauxUtilisateurs);
     };
-
-
-    // Fonction pour trier les utilisateurs
     const trierUtilisateurs = (colonne: string) => {
-        // Si la colonne est déjà triée, inverser l'ordre
         if (tri.colonne === colonne) {
             setTri({
                 colonne,
@@ -141,7 +130,6 @@ const GestionUtilisateursPage = () => {
         }
     };
 
-    // Trier les utilisateurs
     const utilisateursTries = utilisateurs.sort((a, b) => {
         if (tri.colonne) {
             if (tri.ordre === 'asc') {
@@ -187,7 +175,7 @@ const GestionUtilisateursPage = () => {
     return (
         <>
             <Navbar />
-            <main className="bg-gray-100 min-h-screen flex justify-center items-center dark:bg-slate-950">
+            <main className="bg-gray-100 min-h-screen flex justify-center items-center dark:bg-slate-950" style={{backgroundImage: `url("/biblio3.jpg")`}}>
                 <div className="bg-white p-8 rounded-lg shadow-lg w-full lg:w-3/4 xl:w-2/3 dark:bg-slate-900">
                     <h2 className="text-3xl font-semibold mb-6 text-center">Gestion des utilisateurs</h2>
     
